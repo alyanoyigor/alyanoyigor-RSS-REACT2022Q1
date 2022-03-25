@@ -5,23 +5,20 @@ import { Container } from './Container';
 
 const CustomNavLink = styled(NavLink)`
   text-decoration: none;
-  color: rebeccapurple;
+  color: #000;
   &.active {
     font-weight: 700;
   }
 `;
 
 const HeaderWrapper = styled.header`
-  display: flex;
-  justify-content: center;
   padding: 1rem 0;
 `;
 
 const Nav = styled.nav`
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 3rem;
+  gap: 2rem;
 `;
 
 export const Header = () => {

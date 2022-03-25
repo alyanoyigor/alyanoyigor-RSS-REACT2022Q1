@@ -1,5 +1,9 @@
 import React from 'react';
 
 export const About = () => {
-  return <div>AboutUs</div>;
+  return (
+    <div>
+      <h1>About us</h1>
+    </div>
+  );
 };
