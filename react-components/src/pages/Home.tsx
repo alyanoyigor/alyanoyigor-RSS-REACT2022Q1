@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { CardsList } from '../components/CardsList';
+import { HomeToolbar } from '../components/HomeToolbar';
 import { Search } from '../components/Search';
 
 const HomeWrapper = styled.div`
@@ -10,8 +12,11 @@ const HomeWrapper = styled.div`
 export const Home = () => {
   return (
     <HomeWrapper>
-      <h1>Home</h1>
-      <Search />
+      <HomeToolbar>
+        <h1>Home</h1>
+        <Search />
+      </HomeToolbar>
+      <CardsList />
     </HomeWrapper>
   );
 };

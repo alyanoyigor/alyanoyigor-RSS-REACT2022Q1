@@ -5,9 +5,9 @@ const SearchInput = styled.input`
   font: inherit;
   padding: 0.5rem;
   border-radius: 6px;
-  border: 1px solid #ccc;
-  width: 20rem;
-  max-width: 100%;
+  border: 1px solid #000;
+  width: 100%;
+  max-width: 15rem;
 `;
 
 export class Search extends React.Component<Record<string, unknown>, { searchValue: string }> {
@@ -40,9 +40,12 @@ export class Search extends React.Component<Record<string, unknown>, { searchVal
 
   render() {
     return (
-      <div>
-        <SearchInput type="text" value={this.state.searchValue} onChange={this.handleChange} />
-      </div>
+      <SearchInput
+        type="text"
+        value={this.state.searchValue}
+        onChange={this.handleChange}
+        id="search-input"
+      />
     );
   }
 }
