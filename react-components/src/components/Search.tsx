@@ -1,5 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
+import SearchIcon from '../assets/svg/search.svg';
 
 const SearchInput = styled.input`
   font: inherit;
@@ -7,7 +8,10 @@ const SearchInput = styled.input`
   border-radius: 6px;
   border: 1px solid #000;
   width: 100%;
-  max-width: 15rem;
+  max-width: 14rem;
+  padding-left: 2.5rem;
+  background: url(${SearchIcon}) no-repeat scroll 0.5rem 0.5rem;
+  background-size: 1.2rem;
 `;
 
 export class Search extends React.Component<Record<string, unknown>, { searchValue: string }> {
