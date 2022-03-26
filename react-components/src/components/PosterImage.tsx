@@ -1,0 +1,50 @@
+import React from 'react';
+import styled from 'styled-components';
+
+const PosterWrapper = styled.div`
+  position: relative;
+  display: inline-flex;
+`;
+
+const Image = styled.img`
+  max-width: 16rem;
+  width: 100%;
+`;
+
+const RatedWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  background: linear-gradient(to right bottom, #134b5f, #2596be, #66b6d2);
+  position: absolute;
+  bottom: -5%;
+  right: 5%;
+`;
+
+const RatedText = styled.span`
+  line-height: 100%;
+  font-weight: 500;
+  color: #fff;
+`;
+
+const MOVIE_IMAGE_URL = 'https://image.tmdb.org/t/p/w300_and_h450_bestv2';
+
+type Poster = {
+  poster_path: string;
+  vote_average: number;
+  title: string;
+};
+
+export const PosterImage = ({ poster_path, vote_average, title }: Poster) => {
+  return (
+    <PosterWrapper>
+      <Image src={MOVIE_IMAGE_URL + poster_path} alt={title} />
+      <RatedWrapper>
+        <RatedText>{vote_average}</RatedText>
+      </RatedWrapper>
+    </PosterWrapper>
+  );
+};

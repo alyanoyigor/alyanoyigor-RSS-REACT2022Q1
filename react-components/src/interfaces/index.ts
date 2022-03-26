@@ -19,12 +19,3 @@ export type GenreData = {
   id: number;
   name: string;
 };
-
-export type CardProps = {
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  vote_average: number;
-  genres: GenreData[];
-};
