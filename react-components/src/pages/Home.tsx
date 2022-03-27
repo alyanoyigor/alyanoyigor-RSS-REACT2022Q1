@@ -13,7 +13,7 @@ export const Home = () => {
   return (
     <HomeWrapper>
       <HomeToolbar>
-        <h1>Home</h1>
+        <h1 data-testid="home-title">Home</h1>
         <Search />
       </HomeToolbar>
       <CardsList />

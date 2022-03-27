@@ -40,6 +40,7 @@ export class Search extends React.Component<Record<string, unknown>, { searchVal
 
   handleChange(event: ChangeEvent<HTMLInputElement>) {
     this.setState({ searchValue: event.target.value });
+    this.saveValueToLocalStorage(event.target.value);
   }
 
   render() {
@@ -48,7 +49,7 @@ export class Search extends React.Component<Record<string, unknown>, { searchVal
         type="text"
         value={this.state.searchValue}
         onChange={this.handleChange}
-        id="search-input"
+        role="search"
       />
     );
   }

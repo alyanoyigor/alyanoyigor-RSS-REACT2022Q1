@@ -23,11 +23,15 @@ const Nav = styled.nav`
 
 export const Header = () => {
   return (
-    <HeaderWrapper>
+    <HeaderWrapper data-testid="header">
       <Container>
         <Nav>
-          <CustomNavLink to="/">Home</CustomNavLink>
-          <CustomNavLink to="/about-us">About</CustomNavLink>
+          <CustomNavLink data-testid="home-link" to="/">
+            Home
+          </CustomNavLink>
+          <CustomNavLink data-testid="about-link" to="/about-us">
+            About
+          </CustomNavLink>
         </Nav>
       </Container>
     </HeaderWrapper>
