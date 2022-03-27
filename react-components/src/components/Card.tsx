@@ -13,6 +13,14 @@ const CardWrapper = styled.article`
   overflow: hidden;
   -webkit-box-shadow: 5px 5px 10px 5px rgba(15, 60, 76, 0.15);
   box-shadow: 5px 5px 10px 5px rgba(15, 60, 76, 0.15);
+
+  @media screen and (max-width: 880px) {
+    max-width: 12rem;
+  }
+
+  @media screen and (max-width: 471px) {
+    max-width: 100%;
+  }
 `;
 
 export type CardProps = {
@@ -33,7 +41,7 @@ export const Card = ({
   release_date,
 }: CardProps) => {
   return (
-    <CardWrapper>
+    <CardWrapper data-testid="card-item">
       <PosterImage poster_path={poster_path} title={title} vote_average={vote_average} />
       <CardTextSection
         popularity={popularity}

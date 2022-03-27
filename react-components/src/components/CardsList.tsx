@@ -7,7 +7,8 @@ import { GenreData, MovieData } from '../interfaces';
 const ListWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 3rem;
+  justify-content: space-between;
+  gap: 1.5rem;
 `;
 
 export class CardsList extends React.Component<
@@ -49,7 +50,7 @@ export class CardsList extends React.Component<
 
   render() {
     return (
-      <ListWrapper>
+      <ListWrapper data-testid="card-list">
         {this.state.moviesData.map((movie: MovieData) => (
           <Card key={movie.id} genres={this.getGenresFromMovie(movie.genre_ids)} {...movie} />
         ))}

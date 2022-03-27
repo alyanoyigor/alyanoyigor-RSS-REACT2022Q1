@@ -9,6 +9,17 @@ const PosterWrapper = styled.div`
 const Image = styled.img`
   max-width: 16rem;
   width: 100%;
+
+  @media screen and (max-width: 880px) {
+    max-width: 12rem;
+  }
+
+  @media screen and (max-width: 471px) {
+    object-fit: cover;
+    height: 20rem;
+    max-width: 100%;
+    object-position: top;
+  }
 `;
 
 const RatedWrapper = styled.div`
