@@ -13,6 +13,7 @@
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
     "axios": "^0.26.1",
+    "cross-env": "^7.0.3",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-prettier": "^4.0.0",
@@ -32,7 +33,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test-coverage": "react-scripts test --coverage"
+    "test:coverage": "cross-env CI=true npm test -- --env=jsdom --coverage"
   },
   "eslintConfig": {
     "extends": [
