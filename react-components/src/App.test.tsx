@@ -15,22 +15,30 @@ describe('App', () => {
     expect((await screen.findAllByTestId('card-item'))[0]).toBeInTheDocument();
   });
 
-  it('Check localStorage value after switch pages', () => {
+  it('Save to localStorage value from input before switching between pages', () => {
     renderWithRouter(<App />);
     const input: HTMLInputElement = screen.getByRole('search');
     const homeLink = screen.getByTestId('home-link');
     const aboutLink = screen.getByTestId('about-link');
 
     fireEvent.change(input, { target: { value: 'Test' } });
-    const searchValue = localStorage.getItem('searchValue');
-    expect(searchValue).toBe('Test');
-
     userEvent.click(aboutLink);
-    expect(screen.getByTestId('about-title')).toBeInTheDocument();
     userEvent.click(homeLink);
 
-    expect(screen.getByTestId('home-title')).toBeInTheDocument();
-    expect(screen.getByRole('search')).toContainHTML('Test');
+    expect(localStorage.getItem('searchValue')).toBe('Test');
+  });
+
+  it('Save input value after switching between pages', () => {
+    renderWithRouter(<App />);
+    const input: HTMLInputElement = screen.getByRole('search');
+    const homeLink = screen.getByTestId('home-link');
+    const aboutLink = screen.getByTestId('about-link');
+
+    fireEvent.change(input, { target: { value: 'Test' } });
+    userEvent.click(aboutLink);
+    userEvent.click(homeLink);
+
+    expect(input).toContainHTML('Test');
   });
 
   it('Switch between pages', () => {
