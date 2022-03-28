@@ -1,14 +1,18 @@
+import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
 import { Card } from '../components/Card';
 import { MOVIE_API_KEY } from '../config';
 import { GenreData, MovieData } from '../interfaces';
+import { Preloader } from './Preloader';
 
-const ListWrapper = styled.div`
+const ListWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 1.5rem;
+  margin: 0;
+  padding: 0;
 `;
 
 export class CardsList extends React.Component<
@@ -21,27 +25,37 @@ export class CardsList extends React.Component<
   }
   componentDidMount() {
     this.getMovieData(1).then((data) =>
-      this.setState((prevState) => ({ ...prevState, moviesData: data.results }))
+      this.setState((prevState) => ({ ...prevState, moviesData: data }))
     );
     this.getMovieGenres().then((data) =>
-      this.setState((prevState) => ({ ...prevState, genresData: data.genres }))
+      this.setState((prevState) => ({ ...prevState, genresData: data }))
     );
+  }
+
+  componentWillUnmount() {
+    this.setState = () => {};
   }
 
   async getMovieData(page: number) {
-    const moviesRequest = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?page=${page}&api_key=${MOVIE_API_KEY}`
-    );
-    const moviesData = await moviesRequest.json();
-    return moviesData;
+    try {
+      const moviesRequest = await axios.get(
+        `https://api.themoviedb.org/3/movie/popular?page=${page}&api_key=${MOVIE_API_KEY}`
+      );
+      return moviesRequest.data.results;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async getMovieGenres() {
-    const genresRequest = await fetch(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${MOVIE_API_KEY}`
-    );
-    const genresData = await genresRequest.json();
-    return genresData;
+    try {
+      const genresRequest = await axios.get(
+        `https://api.themoviedb.org/3/genre/movie/list?api_key=${MOVIE_API_KEY}`
+      );
+      return genresRequest.data.genres;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   getGenresFromMovie(movieGenreIds: number[]) {
@@ -51,9 +65,13 @@ export class CardsList extends React.Component<
   render() {
     return (
       <ListWrapper data-testid="card-list">
-        {this.state.moviesData.map((movie: MovieData) => (
-          <Card key={movie.id} genres={this.getGenresFromMovie(movie.genre_ids)} {...movie} />
-        ))}
+        {!this.state.moviesData.length ? (
+          <Preloader />
+        ) : (
+          this.state.moviesData.map((movie: MovieData) => (
+            <Card key={movie.id} genres={this.getGenresFromMovie(movie.genre_ids)} {...movie} />
+          ))
+        )}
       </ListWrapper>
     );
   }
