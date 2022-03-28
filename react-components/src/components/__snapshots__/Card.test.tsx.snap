@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card Check elements inside card 1`] = `
+<div>
+  <li
+    class="sc-iqcoie hQDMQ"
+    data-testid="card-item"
+  >
+    <div
+      class="sc-ftvSup epsbQV"
+    >
+      <img
+        alt="Turning Red"
+        class="sc-papXJ hVBuAT"
+        src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/qsdjk9oAKSQMWs0Vt5Pyfh6O4GZ.jpg"
+      />
+      <div
+        class="sc-jqUVSM hKsCKc"
+      >
+        <span
+          class="sc-kDDrLX eYSnWC"
+        >
+          8.2
+        </span>
+      </div>
+    </div>
+    <div
+      class="sc-iBkjds cYrNIL"
+    >
+      <h3
+        class="sc-jSMfEi eYELyE"
+      >
+        Turning Red
+      </h3>
+      <p
+        class="sc-gKXOVf dgaTob"
+      >
+        Dec
+         
+        15
+        , 
+        2021
+      </p>
+      <div
+        class="sc-hKMtZM fXRobG"
+      >
+        <span
+          class="sc-eCYdqJ jPhamf"
+        >
+          Animation
+        </span>
+        <span
+          class="sc-eCYdqJ jPhamf"
+        >
+          Comedy
+        </span>
+      </div>
+      <div
+        class="sc-dkzDqf bhNJaf"
+      >
+        <div>
+          <button
+            class="sc-gsnTZi dCulqv"
+          >
+            <svg
+              fill="#c71306"
+              height="1.2rem"
+              width="1.2rem"
+            >
+              like.svg
+            </svg>
+          </button>
+          <button
+            class="sc-gsnTZi dCulqv"
+          >
+            <svg
+              fill="#134b5f"
+              height="1.25rem"
+              width="1.25rem"
+            >
+              bookmark.svg
+            </svg>
+          </button>
+        </div>
+        <div
+          class="sc-bczRLJ cHQyqG"
+        >
+          <svg
+            fill="rgba(0, 0, 0, 0.4)"
+            height="1rem"
+            width="1rem"
+          >
+            eye.svg
+          </svg>
+          <span>
+            1K
+          </span>
+        </div>
+      </div>
+    </div>
+  </li>
+</div>
+`;

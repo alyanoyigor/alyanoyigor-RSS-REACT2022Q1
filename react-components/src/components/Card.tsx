@@ -4,7 +4,7 @@ import { GenreData } from '../interfaces';
 import { CardTextSection } from './CardTextSection';
 import { PosterImage } from './PosterImage';
 
-const CardWrapper = styled.article`
+const CardWrapper = styled.li`
   display: flex;
   flex-direction: column;
   max-width: 16rem;
