@@ -1,17 +1,12 @@
 import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '../assets/svg/search.svg';
+import { StyledInput } from './StyledInput';
 
-const SearchInput = styled.input`
-  font: inherit;
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #000;
-  width: 100%;
-  max-width: 14rem;
-  padding-left: 2.5rem;
+const SearchInput = styled(StyledInput)`
   background: url(${SearchIcon}) no-repeat scroll 0.5rem 0.5rem;
   background-size: 1.2rem;
+  padding-left: 2.5rem;
 `;
 
 export class Search extends React.Component<Record<string, unknown>, { searchValue: string }> {
@@ -47,6 +42,7 @@ export class Search extends React.Component<Record<string, unknown>, { searchVal
     return (
       <SearchInput
         type="text"
+        placeholder="Search..."
         value={this.state.searchValue}
         onChange={this.handleChange}
         role="search"

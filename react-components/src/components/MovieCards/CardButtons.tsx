@@ -1,8 +1,8 @@
 import React from 'react';
-import { ReactComponent as EyeIcon } from '../assets/svg/eye.svg';
-import { ReactComponent as LikeIcon } from '../assets/svg/like.svg';
-import { ReactComponent as BookmarkIcon } from '../assets/svg/bookmark.svg';
-import { convertLongNum } from '../utils';
+import { ReactComponent as EyeIcon } from '../../assets/svg/eye.svg';
+import { ReactComponent as LikeIcon } from '../../assets/svg/like.svg';
+import { ReactComponent as BookmarkIcon } from '../../assets/svg/bookmark.svg';
+import { convertLongNum } from '../../utils';
 import styled from 'styled-components';
 
 const ViewContainer = styled.div`

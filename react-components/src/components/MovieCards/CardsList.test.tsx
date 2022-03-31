@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import axios from 'axios';
-import { GenreData, MovieData } from '../interfaces';
+import { GenreData, MovieData } from '../../interfaces';
 import { CardsList } from './CardsList';
 
 jest.mock('axios');

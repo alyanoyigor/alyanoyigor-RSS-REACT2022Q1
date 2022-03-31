@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GenreData } from '../interfaces';
+import { GenreData } from '../../interfaces';
 import { CardTextSection } from './CardTextSection';
-import { PosterImage } from './PosterImage';
+import { PosterImage } from '../PosterImage';
 
 const CardWrapper = styled.li`
   display: flex;

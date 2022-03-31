@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
-import { Card } from '../components/Card';
-import { MOVIE_API_KEY } from '../config';
-import { GenreData, MovieData } from '../interfaces';
-import { Preloader } from './Preloader';
+import { Card } from './Card';
+import { MOVIE_API_KEY } from '../../config';
+import { GenreData, MovieData } from '../../interfaces';
+import { Preloader } from '../Preloader';
 
 const ListWrapper = styled.ul`
   display: flex;

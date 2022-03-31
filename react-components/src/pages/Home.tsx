@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CardsList } from '../components/CardsList';
+import { CardsList } from '../components/MovieCards/CardsList';
 import { HomeToolbar } from '../components/HomeToolbar';
 import { Search } from '../components/Search';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GenreData } from '../interfaces';
+import { GenreData } from '../../interfaces';
 import { CardButtons } from './CardButtons';
-import { MovieGenres } from './MovieGenres';
+import { MovieGenres } from '../MovieGenres';
 
 const CardTitle = styled.h3`
   margin: 0;
