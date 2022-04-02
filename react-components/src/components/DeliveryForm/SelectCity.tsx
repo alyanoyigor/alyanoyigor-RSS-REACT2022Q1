@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import { CITIES_DATA } from '../../data/citiesData';
 import { StyledSelect } from '../StyledInput';
 
 type SelectCityProps = {
   countryId: number | null;
+  citySelect: RefObject<HTMLSelectElement>;
 };
 
-export const SelectCity = ({ countryId }: SelectCityProps) => {
+export const SelectCity = ({ countryId, citySelect }: SelectCityProps) => {
   let cities = null;
   if (countryId && countryId !== -1) {
     cities = CITIES_DATA[countryId].split('|');
   }
   return (
-    <StyledSelect name="City" required>
+    <StyledSelect ref={citySelect} name="City">
       <option value="">Select City</option>
       {cities?.map((city) => (
         <option key={city} value={city}>

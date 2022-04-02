@@ -1,10 +1,5 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import styled from 'styled-components';
-
-type FormCheckboxProps = {
-  labelValue: string;
-  required: boolean;
-};
 
 const CheckboxInput = styled.input`
   position: absolute;
@@ -22,6 +17,7 @@ const Checkmark = styled.span`
   width: 1.5rem;
   border-radius: 4px;
   background-color: #eee;
+  border: ${(props: { isValid: boolean }) => (props.isValid ? 'none' : '1px solid #e91b1b')};
 
   &:after {
     content: '';
@@ -39,11 +35,7 @@ const CheckboxLabel = styled.label`
   font-size: 1rem;
   user-select: none;
 
-  &:hover input ~ .checkmark {
-    background-color: #ccc;
-  }
-
-  & span:after {
+  & .checkmark:after {
     left: 9px;
     top: 5px;
     width: 4px;
@@ -55,21 +47,40 @@ const CheckboxLabel = styled.label`
     transform: rotate(45deg);
   }
 
-  & input:checked ~ span:after {
+  & input:checked ~ .checkmark:after {
     display: block;
   }
 
-  & input:checked ~ span {
+  & input:checked ~ .checkmark {
     background-color: rgb(31, 109, 131);
+  }
+
+  & .error-message {
+    display: block;
+    font-size: 0.8rem;
+    color: #e91b1b;
   }
 `;
 
-export const FormCheckbox = ({ labelValue, required }: FormCheckboxProps) => {
+type FormCheckboxProps = {
+  labelValue: string;
+  isValid: boolean;
+  errorMessage?: string;
+  checkboxPrivacy?: RefObject<HTMLInputElement>;
+};
+
+export const FormCheckbox = ({
+  labelValue,
+  checkboxPrivacy,
+  isValid,
+  errorMessage,
+}: FormCheckboxProps) => {
   return (
     <CheckboxLabel>
       {labelValue}
-      <CheckboxInput type="checkbox" required={required} />
-      <Checkmark />
+      <CheckboxInput ref={checkboxPrivacy} type="checkbox" />
+      <Checkmark className="checkmark" isValid={isValid} />
+      <span className="error-message">{errorMessage}</span>
     </CheckboxLabel>
   );
 };

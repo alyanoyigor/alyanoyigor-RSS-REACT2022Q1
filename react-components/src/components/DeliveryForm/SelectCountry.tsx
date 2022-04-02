@@ -1,17 +1,18 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, RefObject } from 'react';
 import { COUNTRIES_DATA } from '../../data/countriesData';
 import { StyledSelect } from '../StyledInput';
 
 type SelectCountryProps = {
+  countrySelect: RefObject<HTMLSelectElement>;
   onSelectCountryChange: (value: number) => void;
 };
 
-export const SelectCountry = (props: SelectCountryProps) => {
+export const SelectCountry = ({ onSelectCountryChange, countrySelect }: SelectCountryProps) => {
   const handleCountrySelect = (e: ChangeEvent<HTMLSelectElement>) => {
-    props.onSelectCountryChange(COUNTRIES_DATA.findIndex((item) => item === e.target.value));
+    onSelectCountryChange(COUNTRIES_DATA.findIndex((item) => item === e.target.value));
   };
   return (
-    <StyledSelect name="Country" onChange={handleCountrySelect} required>
+    <StyledSelect ref={countrySelect} name="Country" onChange={handleCountrySelect}>
       <option value="">Select Country</option>
       {COUNTRIES_DATA.map((country) => (
         <option key={country} value={country}>

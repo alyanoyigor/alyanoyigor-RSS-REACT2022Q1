@@ -22,7 +22,7 @@ const inputStyles = css`
 export const SearchInput = styled.input`
   ${inputStyles}
   max-width: 15rem;
-  background: url(${SearchIcon}) no-repeat scroll 0.5rem 0.5rem;
+  background: url(${SearchIcon}) no-repeat scroll 0.5rem 0.8rem;
   background-size: 1.2rem;
   padding-left: 2.5rem;
 `;

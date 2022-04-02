@@ -1,16 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
 
+type InputControlProps = {
+  labelValue?: string;
+  errorMessage?: string;
+  children?: React.ReactNode;
+} & InputWrapperProps;
+
+type InputWrapperProps = {
+  maxWidth?: number;
+  isValid?: boolean;
+};
+
 export const InputWrapper = styled.div`
   display: flex;
+  position: relative;
   flex-wrap: wrap;
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
-  max-width: ${(props: { maxWidth: number }) => props.maxWidth}rem;
+  max-width: ${(props: InputWrapperProps) => props.maxWidth}rem;
 
-  & input {
+  & input,
+  & select {
     color: #fff;
+    border-color: ${(props: InputWrapperProps) => props.isValid === false && '#ff8585'};
+  }
+
+  & option {
+    background-color: rgb(31, 109, 131);
   }
 
   & input::placeholder,
@@ -18,10 +36,16 @@ export const InputWrapper = styled.div`
     color: #ccc;
   }
 
-  & label {
+  & .label {
     color: #fff;
     font-weight: 500;
     display: block;
+  }
+
+  & .error-message {
+    display: block;
+    font-size: 0.8rem;
+    color: #ff8585;
   }
 
   @media screen and (max-width: 768px) {
@@ -29,17 +53,18 @@ export const InputWrapper = styled.div`
   }
 `;
 
-type InputControlProps = {
-  labelValue?: string;
-  maxWidth?: number;
-  children?: React.ReactNode;
-};
-
-export const InputControl = ({ labelValue, maxWidth = 15, children }: InputControlProps) => {
+export const InputControl = ({
+  labelValue,
+  maxWidth = 15,
+  errorMessage,
+  isValid,
+  children,
+}: InputControlProps) => {
   return (
-    <InputWrapper maxWidth={maxWidth}>
-      <label>{labelValue}</label>
+    <InputWrapper maxWidth={maxWidth} isValid={isValid}>
+      <label className="label">{labelValue}</label>
       {children}
+      <span className="error-message">{errorMessage}</span>
     </InputWrapper>
   );
 };

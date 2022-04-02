@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import { FormCheckbox } from './FormCheckbox';
 
@@ -9,11 +9,26 @@ const CheckboxWrapper = styled.div`
   margin-bottom: 2rem;
 `;
 
-export const FormPromotions = () => {
+type FormPromotionsProps = {
+  checkboxPrivacy: RefObject<HTMLInputElement>;
+  isValidCheckboxPrivacy: boolean;
+  checkboxPrivacyErrorMessage: string;
+};
+
+export const FormPromotions = ({
+  checkboxPrivacy,
+  isValidCheckboxPrivacy,
+  checkboxPrivacyErrorMessage,
+}: FormPromotionsProps) => {
   return (
     <CheckboxWrapper>
-      <FormCheckbox labelValue="I agree to privacy policy" required={true} />
-      <FormCheckbox labelValue="I wish to be notified of promotions" required={false} />
+      <FormCheckbox
+        checkboxPrivacy={checkboxPrivacy}
+        isValid={isValidCheckboxPrivacy}
+        errorMessage={checkboxPrivacyErrorMessage}
+        labelValue="I agree to privacy policy"
+      />
+      <FormCheckbox isValid={true} labelValue="I wish to be notified of promotions" />
     </CheckboxWrapper>
   );
 };

@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import { StyledInput } from '../StyledInput';
 import { FormBlock } from './FormBlock';
 import { InputControl } from './InputControl';
 import { SelectCity } from './SelectCity';
 import { SelectCountry } from './SelectCountry';
 
-export class FormLocation extends React.Component<
-  Record<string, unknown>,
-  { countryId: number | null }
-> {
-  constructor(props: Record<string, unknown>) {
+type FormLocationProps = {
+  countrySelect: RefObject<HTMLSelectElement>;
+  countrySelectErrorMessage: string;
+  isValidCountrySelect: boolean;
+  citySelect: RefObject<HTMLSelectElement>;
+  citySelectErrorMessage: string;
+  isValidCitySelect: boolean;
+  zipCodeInput: RefObject<HTMLInputElement>;
+  zipCodeInputErrorMessage: string;
+  isValidInputZipCode: boolean;
+};
+
+export class FormLocation extends React.Component<FormLocationProps, { countryId: number | null }> {
+  constructor(props: FormLocationProps) {
     super(props);
     this.state = { countryId: null };
   }
@@ -21,14 +30,32 @@ export class FormLocation extends React.Component<
   render() {
     return (
       <FormBlock title="Location Info">
-        <InputControl maxWidth={10} labelValue="Country">
-          <SelectCountry onSelectCountryChange={this.changeCountry.bind(this)} />
+        <InputControl
+          errorMessage={this.props.countrySelectErrorMessage}
+          isValid={this.props.isValidCountrySelect}
+          maxWidth={10}
+          labelValue="Country"
+        >
+          <SelectCountry
+            onSelectCountryChange={this.changeCountry.bind(this)}
+            countrySelect={this.props.countrySelect}
+          />
         </InputControl>
-        <InputControl maxWidth={10} labelValue="City">
-          <SelectCity countryId={this.state.countryId} />
+        <InputControl
+          errorMessage={this.props.citySelectErrorMessage}
+          isValid={this.props.isValidCitySelect}
+          maxWidth={10}
+          labelValue="City"
+        >
+          <SelectCity countryId={this.state.countryId} citySelect={this.props.citySelect} />
         </InputControl>
-        <InputControl maxWidth={20} labelValue="Zip code">
-          <StyledInput type="tel" min="0" placeholder="#####" pattern="[0-9]{5}" required />
+        <InputControl
+          errorMessage={this.props.zipCodeInputErrorMessage}
+          isValid={this.props.isValidInputZipCode}
+          maxWidth={20}
+          labelValue="Zip code"
+        >
+          <StyledInput ref={this.props.zipCodeInput} type="number" placeholder="#####" />
         </InputControl>
       </FormBlock>
     );
