@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GenreData } from '../interfaces';
+import { GenreData } from '../../interfaces';
 
 const Genres = styled.div`
   display: flex;

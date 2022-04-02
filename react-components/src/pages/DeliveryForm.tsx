@@ -297,7 +297,9 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
             isValidCheckboxPrivacy={this.state.validityInputs.isValidCheckboxPrivacy}
             checkboxPrivacyErrorMessage={this.state.errorMessages.checkboxPrivacyErrorMessage}
           />
-          <SubmitBtn>Submit</SubmitBtn>
+          <SubmitBtn>
+            Submit {Object.values(this.state.validityInputs).every(Boolean) ? '✔️' : '❌'}
+          </SubmitBtn>
         </Form>
       </div>
     );
