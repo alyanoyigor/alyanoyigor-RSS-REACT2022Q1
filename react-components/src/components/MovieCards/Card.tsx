@@ -18,7 +18,7 @@ const CardWrapper = styled.li`
     max-width: 12rem;
   }
 
-  @media screen and (max-width: 471px) {
+  @media screen and (max-width: 488px) {
     max-width: 100%;
   }
 `;

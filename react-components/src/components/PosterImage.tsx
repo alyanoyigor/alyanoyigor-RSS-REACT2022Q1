@@ -14,7 +14,7 @@ const Image = styled.img`
     max-width: 12rem;
   }
 
-  @media screen and (max-width: 471px) {
+  @media screen and (max-width: 488px) {
     object-fit: cover;
     height: 20rem;
     max-width: 100%;

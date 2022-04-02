@@ -32,6 +32,7 @@ type ErrorMessageInput = {
 };
 
 type FormState = {
+  isDisabledSubmitBtn: boolean;
   validityInputs: ValidityInput;
   errorMessages: ErrorMessageInput;
 };
@@ -60,6 +61,7 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
     this.checkboxPrivacy = React.createRef();
 
     this.state = {
+      isDisabledSubmitBtn: true,
       validityInputs: {
         isValidBirthdayInput: true,
         isValidFullNameInput: true,
@@ -83,16 +85,21 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
 
   async handleSubmit(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
+    await this.validateAllInputs();
+    if (!Object.values(this.state.validityInputs).every(Boolean)) {
+      this.setState((prevState) => ({ ...prevState, isDisabledSubmitBtn: true }));
+      return;
+    }
+    alert('Все четко!');
+  }
+
+  async validateAllInputs() {
     await this.validateBirthdayInput();
     await this.validateFullNameInput();
     await this.validateFileInput();
     await this.validateSelectElements();
     await this.validateZipCodeInput();
     await this.validateCheckboxPrivacy();
-    if (!Object.values(this.state.validityInputs).every(Boolean)) {
-      return;
-    }
-    alert('Все четко!');
   }
 
   async validateBirthdayInput() {
@@ -224,7 +231,6 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
 
   async validateCheckboxPrivacy() {
     const checkboxPrivacy = this.checkboxPrivacy.current?.checked;
-    console.log(checkboxPrivacy);
     if (!checkboxPrivacy) {
       this.setNewValueToState(
         'isValidCheckboxPrivacy',
@@ -265,11 +271,15 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
     return 0;
   }
 
+  onChangeForm() {
+    this.setState((prevState) => ({ ...prevState, isDisabledSubmitBtn: false }));
+  }
+
   render() {
     return (
       <div>
         <h1>Delivery Form</h1>
-        <Form onSubmit={this.handleSubmit} ref={this.form}>
+        <Form onSubmit={this.handleSubmit} onChange={this.onChangeForm.bind(this)} ref={this.form}>
           <FormPersonalInfo
             birthdayInput={this.birthdayInput}
             birthdayInputErrorMessage={this.state.errorMessages.birthdayInputErrorMessage}
@@ -297,8 +307,8 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
             isValidCheckboxPrivacy={this.state.validityInputs.isValidCheckboxPrivacy}
             checkboxPrivacyErrorMessage={this.state.errorMessages.checkboxPrivacyErrorMessage}
           />
-          <SubmitBtn>
-            Submit {Object.values(this.state.validityInputs).every(Boolean) ? '✔️' : '❌'}
+          <SubmitBtn isDisabled={this.state.isDisabledSubmitBtn}>
+            Submit {this.state.isDisabledSubmitBtn ? '❌' : '✔️'}
           </SubmitBtn>
         </Form>
       </div>

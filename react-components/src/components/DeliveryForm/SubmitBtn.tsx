@@ -13,11 +13,25 @@ const Button = styled.button`
   cursor: pointer;
   outline: inherit;
 
+  &:disabled {
+    background: rgb(75, 99, 105);
+  }
+
   @media screen and (max-width: 768px) {
     max-width: none;
   }
 `;
 
-export const SubmitBtn = ({ children }: { children: React.ReactNode }) => {
-  return <Button type="submit">{children}</Button>;
+export const SubmitBtn = ({
+  isDisabled,
+  children,
+}: {
+  isDisabled: boolean;
+  children: React.ReactNode;
+}) => {
+  return (
+    <Button disabled={isDisabled} type="submit">
+      {children}
+    </Button>
+  );
 };
