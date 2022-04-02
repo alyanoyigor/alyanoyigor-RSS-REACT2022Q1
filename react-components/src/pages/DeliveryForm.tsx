@@ -1,7 +1,16 @@
 import React, { ChangeEvent, RefObject } from 'react';
+import styled from 'styled-components';
 import { FormCheckbox } from '../components/DeliveryForm/FormCheckbox';
 import { FormLocation } from '../components/DeliveryForm/FormLocation';
 import { FormPersonalInfo } from '../components/DeliveryForm/FormPersonalInfo';
+import { FormPromotions } from '../components/DeliveryForm/FormPromotions';
+import { SubmitBtn } from '../components/DeliveryForm/SubmitBtn';
+
+const Form = styled.form`
+  padding: 2rem;
+  background-color: rgb(112, 204, 231);
+  border-radius: 1rem;
+`;
 
 export class DeliveryForm extends React.Component {
   form: RefObject<HTMLFormElement>;
@@ -24,15 +33,12 @@ export class DeliveryForm extends React.Component {
     return (
       <div>
         <h1>Delivery Form</h1>
-        <div>
-          <form onSubmit={this.handleSubmit} ref={this.form}>
-            <FormPersonalInfo />
-            <FormLocation />
-            <FormCheckbox labelValue="I agree to privacy policy" required={true} />
-            <FormCheckbox labelValue="I wish to be notified of promotions" required={false} />
-            <button type="submit">Submit</button>
-          </form>
-        </div>
+        <Form onSubmit={this.handleSubmit} ref={this.form}>
+          <FormPersonalInfo />
+          <FormLocation />
+          <FormPromotions />
+          <SubmitBtn>Submit</SubmitBtn>
+        </Form>
       </div>
     );
   }

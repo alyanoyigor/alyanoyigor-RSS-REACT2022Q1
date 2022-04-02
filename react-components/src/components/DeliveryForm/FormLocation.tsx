@@ -1,15 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { StyledInput } from '../StyledInput';
+import { FormBlock } from './FormBlock';
 import { InputControl } from './InputControl';
 import { SelectCity } from './SelectCity';
 import { SelectCountry } from './SelectCountry';
-
-const SelectWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
 
 export class FormLocation extends React.Component<
   Record<string, unknown>,
@@ -26,20 +20,17 @@ export class FormLocation extends React.Component<
 
   render() {
     return (
-      <div>
-        <h3>Location</h3>
-        <SelectWrapper>
-          <div>
-            <SelectCountry onSelectCountryChange={this.changeCountry.bind(this)} />
-          </div>
-          <div>
-            <SelectCity countryId={this.state.countryId} />
-          </div>
-          <InputControl labelValue="Zip code">
-            <StyledInput type="tel" min="0" placeholder="#####" pattern="[0-9]{5}" required />
-          </InputControl>
-        </SelectWrapper>
-      </div>
+      <FormBlock title="Location Info">
+        <InputControl maxWidth={10} labelValue="Country">
+          <SelectCountry onSelectCountryChange={this.changeCountry.bind(this)} />
+        </InputControl>
+        <InputControl maxWidth={10} labelValue="City">
+          <SelectCity countryId={this.state.countryId} />
+        </InputControl>
+        <InputControl maxWidth={20} labelValue="Zip code">
+          <StyledInput type="tel" min="0" placeholder="#####" pattern="[0-9]{5}" required />
+        </InputControl>
+      </FormBlock>
     );
   }
 }
