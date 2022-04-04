@@ -9,7 +9,7 @@ type SelectCityProps = {
 
 export const SelectCity = ({ countryId, citySelect }: SelectCityProps) => {
   let cities = null;
-  if (countryId && countryId !== -1) {
+  if (countryId !== null && countryId !== -1) {
     cities = CITIES_DATA[countryId].split('|');
   }
   return (

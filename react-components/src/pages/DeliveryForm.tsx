@@ -1,14 +1,27 @@
 import React, { ChangeEvent, RefObject } from 'react';
 import styled from 'styled-components';
+import { FormCard } from '../components/DeliveryForm/FormCard';
 import { FormLocation } from '../components/DeliveryForm/FormLocation';
 import { FormPersonalInfo } from '../components/DeliveryForm/FormPersonalInfo';
 import { FormPromotions } from '../components/DeliveryForm/FormPromotions';
 import { SubmitBtn } from '../components/DeliveryForm/SubmitBtn';
+import ReactIcon from '../assets/logo192.png';
 
 const Form = styled.form`
   padding: 2rem;
   background-color: rgb(112, 204, 231);
   border-radius: 1rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 500px) {
+    padding: 0.5rem;
+  }
+`;
+
+const FormCardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 type ValidityInput = {
@@ -33,8 +46,42 @@ type ErrorMessageInput = {
 
 type FormState = {
   isDisabledSubmitBtn: boolean;
+  cardsState: DeliveryCard[];
   validityInputs: ValidityInput;
   errorMessages: ErrorMessageInput;
+};
+
+const INITIAL_STATE: FormState = {
+  isDisabledSubmitBtn: true,
+  cardsState: [],
+  validityInputs: {
+    isValidBirthdayInput: true,
+    isValidFullNameInput: true,
+    isValidFileInput: true,
+    isValidCountrySelect: true,
+    isValidCitySelect: true,
+    isValidInputZipCode: true,
+    isValidCheckboxPrivacy: true,
+  },
+  errorMessages: {
+    birthdayInputErrorMessage: '',
+    fullNameInputErrorMessage: '',
+    fileInputErrorMessage: '',
+    countrySelectErrorMessage: '',
+    citySelectErrorMessage: '',
+    zipCodeInputErrorMessage: '',
+    checkboxPrivacyErrorMessage: '',
+  },
+};
+
+type DeliveryCard = {
+  fullName: string;
+  birthday: Date;
+  srcImg: string;
+  gender: string;
+  country: string;
+  city: string;
+  zipCode: string;
 };
 
 export class DeliveryForm extends React.Component<Record<string, unknown>, FormState> {
@@ -51,6 +98,7 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onChangeForm = this.onChangeForm.bind(this);
     this.form = React.createRef();
     this.fullNameInput = React.createRef();
     this.birthdayInput = React.createRef();
@@ -60,27 +108,7 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
     this.zipCodeInput = React.createRef();
     this.checkboxPrivacy = React.createRef();
 
-    this.state = {
-      isDisabledSubmitBtn: true,
-      validityInputs: {
-        isValidBirthdayInput: true,
-        isValidFullNameInput: true,
-        isValidFileInput: true,
-        isValidCountrySelect: true,
-        isValidCitySelect: true,
-        isValidInputZipCode: true,
-        isValidCheckboxPrivacy: true,
-      },
-      errorMessages: {
-        birthdayInputErrorMessage: '',
-        fullNameInputErrorMessage: '',
-        fileInputErrorMessage: '',
-        countrySelectErrorMessage: '',
-        citySelectErrorMessage: '',
-        zipCodeInputErrorMessage: '',
-        checkboxPrivacyErrorMessage: '',
-      },
-    };
+    this.state = { ...INITIAL_STATE };
   }
 
   async handleSubmit(e: ChangeEvent<HTMLFormElement>) {
@@ -90,7 +118,45 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
       this.setState((prevState) => ({ ...prevState, isDisabledSubmitBtn: true }));
       return;
     }
-    alert('Все четко!');
+    await this.addCardToState();
+    this.resetInputValues();
+  }
+
+  resetInputValues() {
+    if (this.fullNameInput.current) this.fullNameInput.current.value = '';
+    if (this.birthdayInput.current) this.birthdayInput.current.value = '';
+    if (this.countrySelect.current) this.countrySelect.current.value = '';
+    if (this.fileInput.current) this.fileInput.current.value = '';
+    if (this.citySelect.current) this.citySelect.current.value = '';
+    if (this.checkboxPrivacy.current) this.checkboxPrivacy.current.checked = false;
+    if (this.zipCodeInput.current) this.zipCodeInput.current.value = '';
+    this.setState((prevState) => ({ ...INITIAL_STATE, cardsState: prevState.cardsState }));
+  }
+
+  async addCardToState() {
+    this.setState((prevState: FormState) => {
+      if (
+        this.fullNameInput.current &&
+        this.birthdayInput.current &&
+        this.form.current &&
+        this.countrySelect.current &&
+        this.citySelect.current &&
+        this.zipCodeInput.current
+      ) {
+        const cardState: DeliveryCard = {
+          fullName: this.fullNameInput.current.value,
+          birthday: new Date(this.birthdayInput.current.value),
+          srcImg: this.fileInput.current?.files?.length
+            ? URL.createObjectURL(this.fileInput.current.files[0])
+            : ReactIcon,
+          gender: this.form.current.gender.value,
+          country: this.countrySelect.current.value,
+          city: this.citySelect.current.value,
+          zipCode: this.zipCodeInput.current?.value,
+        };
+        return { ...prevState, cardsState: [cardState, ...prevState.cardsState] };
+      }
+    });
   }
 
   async validateAllInputs() {
@@ -127,9 +193,9 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
   }
 
   async validateFullNameInput() {
-    const fullNameInput = this.fullNameInput.current;
-    const isValidLength = /^.{1,20}$/.test(fullNameInput ? fullNameInput.value : '');
-    const isValidLetters = /^[a-zA-Z]+$/.test(fullNameInput ? fullNameInput.value : '');
+    const fullNameInput = this.fullNameInput.current?.value;
+    const isValidLength = /^.{1,20}$/.test(fullNameInput ? fullNameInput : '');
+    const isValidLetters = /^[a-zA-Z]+$/.test(fullNameInput ? fullNameInput.replace(/ /g, '') : '');
     if (!isValidLength) {
       this.setNewValueToState(
         'isValidFullNameInput',
@@ -153,7 +219,8 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
 
   async validateFileInput() {
     const fileInput = this.fileInput.current?.files;
-    if (fileInput && fileInput[0] && fileInput[0].type !== 'image/jpeg') {
+    const acceptExts = ['image/png', 'image/jpeg', 'image/gif', 'image/jpg'];
+    if (fileInput && fileInput[0] && !acceptExts.some((ext) => ext === fileInput[0].type)) {
       this.setNewValueToState(
         'isValidFileInput',
         'fileInputErrorMessage',
@@ -279,7 +346,7 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
     return (
       <div>
         <h1>Delivery Form</h1>
-        <Form onSubmit={this.handleSubmit} onChange={this.onChangeForm.bind(this)} ref={this.form}>
+        <Form onSubmit={this.handleSubmit} onChange={this.onChangeForm} ref={this.form}>
           <FormPersonalInfo
             birthdayInput={this.birthdayInput}
             birthdayInputErrorMessage={this.state.errorMessages.birthdayInputErrorMessage}
@@ -308,9 +375,18 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
             checkboxPrivacyErrorMessage={this.state.errorMessages.checkboxPrivacyErrorMessage}
           />
           <SubmitBtn isDisabled={this.state.isDisabledSubmitBtn}>
-            Submit {this.state.isDisabledSubmitBtn ? '❌' : '✔️'}
+            Submit{' '}
+            {!this.state.isDisabledSubmitBtn &&
+            Object.values(this.state.validityInputs).every(Boolean)
+              ? '✔️'
+              : '❌'}
           </SubmitBtn>
         </Form>
+        <FormCardWrapper>
+          {this.state.cardsState.map((cardState) => (
+            <FormCard key={Math.random()} {...cardState} />
+          ))}
+        </FormCardWrapper>
       </div>
     );
   }

@@ -7,6 +7,10 @@ const FormBlockWrapper = styled.div`
   padding: 2rem 2rem 3.5rem 2rem;
   border-radius: 1rem;
   box-shadow: 5px 10px 10px 5px rgba(18, 74, 90, 0.25);
+
+  @media (max-width: 500px) {
+    padding: 1rem;
+  }
 `;
 
 const FormBlockTitle = styled.h3`
@@ -16,7 +20,7 @@ const FormBlockTitle = styled.h3`
 
 const FormBlockContentWrapper = styled.div`
   display: flex;
-  align-items: stretch;
+  align-items: flex-start;
   gap: 1rem;
 
   @media (max-width: ${(props: { wrapContentWidth: number }) => props.wrapContentWidth}px) {
