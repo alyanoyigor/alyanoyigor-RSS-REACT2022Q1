@@ -1,12 +1,12 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { DeliveryForm } from '../../pages/DeliveryForm';
+import { Delivery } from '../../pages/Delivery';
 
 describe('FormLocation', () => {
   let submitBtn: HTMLButtonElement;
   beforeEach(() => {
-    render(<DeliveryForm />);
+    render(<Delivery />);
     submitBtn = screen.getByText(/Submit/i);
   });
   describe('Select country', () => {

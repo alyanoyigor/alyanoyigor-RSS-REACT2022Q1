@@ -84,7 +84,7 @@ type DeliveryCard = {
   zipCode: string;
 };
 
-export class DeliveryForm extends React.Component<Record<string, unknown>, FormState> {
+export class Delivery extends React.Component<Record<string, unknown>, FormState> {
   form: RefObject<HTMLFormElement>;
   fullNameInput: RefObject<HTMLInputElement>;
   birthdayInput: RefObject<HTMLInputElement>;

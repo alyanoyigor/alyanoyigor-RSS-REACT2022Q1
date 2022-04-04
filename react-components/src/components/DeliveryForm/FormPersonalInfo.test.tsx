@@ -1,12 +1,12 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { DeliveryForm } from '../../pages/DeliveryForm';
+import { Delivery } from '../../pages/Delivery';
 
 describe('FormPersonalInfo', () => {
   let submitBtn: HTMLButtonElement;
   beforeEach(() => {
-    render(<DeliveryForm />);
+    render(<Delivery />);
     submitBtn = screen.getByText(/Submit/i);
   });
   describe('Input Full Name', () => {
