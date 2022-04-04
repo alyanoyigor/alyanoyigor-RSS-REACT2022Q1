@@ -13,7 +13,7 @@ export const SelectCity = ({ countryId, citySelect }: SelectCityProps) => {
     cities = CITIES_DATA[countryId].split('|');
   }
   return (
-    <StyledSelect ref={citySelect} name="City">
+    <StyledSelect ref={citySelect} data-testid="selectCity" name="City">
       <option value="">Select City</option>
       {cities?.map((city) => (
         <option key={city} value={city}>

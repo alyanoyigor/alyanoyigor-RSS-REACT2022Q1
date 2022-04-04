@@ -12,7 +12,12 @@ export const SelectCountry = ({ onSelectCountryChange, countrySelect }: SelectCo
     onSelectCountryChange(COUNTRIES_DATA.findIndex((item) => item === e.target.value));
   };
   return (
-    <StyledSelect ref={countrySelect} name="Country" onChange={handleCountrySelect}>
+    <StyledSelect
+      ref={countrySelect}
+      data-testid="selectCountry"
+      name="Country"
+      onChange={handleCountrySelect}
+    >
       <option value="">Select Country</option>
       {COUNTRIES_DATA.map((country) => (
         <option key={country} value={country}>

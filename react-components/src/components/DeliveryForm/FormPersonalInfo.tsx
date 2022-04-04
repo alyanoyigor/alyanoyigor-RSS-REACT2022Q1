@@ -36,26 +36,34 @@ export class FormPersonalInfo extends React.Component<FormProps> {
         <InputControl
           maxWidth={20}
           labelValue="Full Name"
+          testErrorId="fullNameError"
           errorMessage={this.props.fullNameInputErrorMessage}
           isValid={this.props.isValidInputFullName}
         >
-          <StyledInput type="text" placeholder="John Johnson" ref={this.props.fullNameInput} />
+          <StyledInput
+            type="text"
+            data-testid="inputFullName"
+            placeholder="John Johnson"
+            ref={this.props.fullNameInput}
+          />
         </InputControl>
         <InputControl
           maxWidth={10.5}
           labelValue="Birthday date"
+          testErrorId="dateError"
           errorMessage={this.props.birthdayInputErrorMessage}
           isValid={this.props.isValidInputBirthday}
         >
-          <StyledInput type="date" ref={this.props.birthdayInput} />
+          <StyledInput type="date" data-testid="inputDate" ref={this.props.birthdayInput} />
         </InputControl>
         <InputControl
           maxWidth={8}
           labelValue="Profile picture"
+          testErrorId="fileError"
           errorMessage={this.props.fileInputErrorMessage}
           isValid={this.props.isValidInputFile}
         >
-          <FileInput type="file" ref={this.props.fileInput} />
+          <FileInput type="file" data-testid="inputFile" ref={this.props.fileInput} />
         </InputControl>
         <GenderInput />
       </FormBlock>

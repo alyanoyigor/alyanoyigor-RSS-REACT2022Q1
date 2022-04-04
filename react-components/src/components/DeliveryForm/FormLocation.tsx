@@ -32,6 +32,7 @@ export class FormLocation extends React.Component<FormLocationProps, { countryId
       <FormBlock title="Location Info">
         <InputControl
           errorMessage={this.props.countrySelectErrorMessage}
+          testErrorId="countryError"
           isValid={this.props.isValidCountrySelect}
           maxWidth={10}
           labelValue="Country"
@@ -43,6 +44,7 @@ export class FormLocation extends React.Component<FormLocationProps, { countryId
         </InputControl>
         <InputControl
           errorMessage={this.props.citySelectErrorMessage}
+          testErrorId="cityError"
           isValid={this.props.isValidCitySelect}
           maxWidth={10}
           labelValue="City"
@@ -52,10 +54,16 @@ export class FormLocation extends React.Component<FormLocationProps, { countryId
         <InputControl
           errorMessage={this.props.zipCodeInputErrorMessage}
           isValid={this.props.isValidInputZipCode}
+          testErrorId="zipCodeError"
           maxWidth={20}
           labelValue="Zip code"
         >
-          <StyledInput ref={this.props.zipCodeInput} type="number" placeholder="#####" />
+          <StyledInput
+            ref={this.props.zipCodeInput}
+            data-testid="zipCodeInput"
+            type="number"
+            placeholder="#####"
+          />
         </InputControl>
       </FormBlock>
     );

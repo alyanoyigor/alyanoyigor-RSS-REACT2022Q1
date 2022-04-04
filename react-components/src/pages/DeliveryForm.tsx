@@ -123,13 +123,7 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
   }
 
   resetInputValues() {
-    if (this.fullNameInput.current) this.fullNameInput.current.value = '';
-    if (this.birthdayInput.current) this.birthdayInput.current.value = '';
-    if (this.countrySelect.current) this.countrySelect.current.value = '';
-    if (this.fileInput.current) this.fileInput.current.value = '';
-    if (this.citySelect.current) this.citySelect.current.value = '';
-    if (this.checkboxPrivacy.current) this.checkboxPrivacy.current.checked = false;
-    if (this.zipCodeInput.current) this.zipCodeInput.current.value = '';
+    this.form.current?.reset();
     this.setState((prevState) => ({ ...INITIAL_STATE, cardsState: prevState.cardsState }));
   }
 
@@ -225,7 +219,7 @@ export class DeliveryForm extends React.Component<Record<string, unknown>, FormS
         'isValidFileInput',
         'fileInputErrorMessage',
         false,
-        'Image must be png or jpeg format'
+        'Image must be in png, jpeg or gif format'
       );
       return;
     }

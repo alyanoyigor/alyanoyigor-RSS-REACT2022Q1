@@ -3,7 +3,7 @@
 exports[`Card Check elements inside card 1`] = `
 <div>
   <li
-    class="sc-iqcoie hQDMQ"
+    class="sc-iqcoie iHtpLG"
     data-testid="card-item"
   >
     <div
@@ -11,7 +11,7 @@ exports[`Card Check elements inside card 1`] = `
     >
       <img
         alt="Turning Red"
-        class="sc-papXJ hVBuAT"
+        class="sc-papXJ iZwibF"
         src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/qsdjk9oAKSQMWs0Vt5Pyfh6O4GZ.jpg"
       />
       <div

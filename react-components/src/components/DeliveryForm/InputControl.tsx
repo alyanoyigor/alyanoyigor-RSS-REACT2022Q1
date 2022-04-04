@@ -4,6 +4,7 @@ import styled from 'styled-components';
 type InputControlProps = {
   labelValue?: string;
   errorMessage?: string;
+  testErrorId?: string;
   children?: React.ReactNode;
 } & InputWrapperProps;
 
@@ -58,13 +59,16 @@ export const InputControl = ({
   maxWidth = 15,
   errorMessage,
   isValid,
+  testErrorId,
   children,
 }: InputControlProps) => {
   return (
     <InputWrapper maxWidth={maxWidth} isValid={isValid}>
       <label className="label">{labelValue}</label>
       {children}
-      <span className="error-message">{errorMessage}</span>
+      <span data-testid={testErrorId} className="error-message">
+        {errorMessage}
+      </span>
     </InputWrapper>
   );
 };
