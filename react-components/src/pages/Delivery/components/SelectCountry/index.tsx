@@ -1,6 +1,6 @@
 import React, { ChangeEvent, RefObject } from 'react';
-import { COUNTRIES_DATA } from '../../data/countriesData';
-import { StyledSelect } from '../StyledInput';
+import { COUNTRIES_DATA } from '../../../../data/countriesData';
+import { StyledSelect } from '../../../../components/StyledInput';
 
 type SelectCountryProps = {
   countrySelect: RefObject<HTMLSelectElement>;

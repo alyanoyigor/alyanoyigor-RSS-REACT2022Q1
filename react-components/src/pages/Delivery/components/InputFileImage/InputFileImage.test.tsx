@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Delivery } from '../../pages/Delivery';
+import { Delivery } from '../../index';
 
 describe('Input File', () => {
   let submitBtn: HTMLButtonElement;

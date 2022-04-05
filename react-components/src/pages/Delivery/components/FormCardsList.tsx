@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FormCard } from './FormCard';
-import { DeliveryCard } from '../../interfaces';
+import { DeliveryCard } from '../../../interfaces';
 
 const FormCardWrapper = styled.div`
   display: flex;

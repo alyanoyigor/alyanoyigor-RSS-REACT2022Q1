@@ -1,6 +1,6 @@
 import React, { RefObject } from 'react';
-import { CITIES_DATA } from '../../data/citiesData';
-import { StyledSelect } from '../StyledInput';
+import { CITIES_DATA } from '../../../../data/citiesData';
+import { StyledSelect } from '../../../../components/StyledInput';
 
 type SelectCityProps = {
   countryId: number | null;

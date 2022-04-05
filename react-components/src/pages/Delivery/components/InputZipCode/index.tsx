@@ -1,7 +1,7 @@
 import React from 'react';
-import { InputFormProps } from '../../interfaces';
-import { StyledInput } from '../StyledInput';
-import { InputControl } from './InputControl';
+import { InputFormProps } from '../../../../interfaces';
+import { StyledInput } from '../../../../components/StyledInput';
+import { InputControl } from '../InputControl';
 
 export const InputZipCode = ({ errorMessage, isValid, refInput }: InputFormProps) => {
   return (
