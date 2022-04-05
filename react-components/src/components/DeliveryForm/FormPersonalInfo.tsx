@@ -1,11 +1,11 @@
 import React, { RefObject } from 'react';
-import styled from 'styled-components';
-import { StyledInput } from '../StyledInput';
 import { FormBlock } from './FormBlock';
 import { GenderInput } from './GenderInput';
-import { InputControl } from './InputControl';
+import { InputBirthday } from './InputBirthday';
+import { InputFullName } from './InputFullName';
+import { InputFileImage } from './InputFileImage';
 
-type FormProps = {
+type FormPersonalInfoProps = {
   birthdayInput: RefObject<HTMLInputElement>;
   birthdayInputErrorMessage: string;
   isValidInputBirthday: boolean;
@@ -17,56 +17,25 @@ type FormProps = {
   isValidInputFile: boolean;
 };
 
-const FileInput = styled(StyledInput)`
-  color: transparent !important;
-
-  @media screen and (max-width: 768px) {
-    color: #fff !important;
-  }
-`;
-
-export class FormPersonalInfo extends React.Component<FormProps> {
-  constructor(props: FormProps) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <FormBlock wrapContentWidth={910} title="Personal Info">
-        <InputControl
-          maxWidth={20}
-          labelValue="Full Name"
-          testErrorId="fullNameError"
-          errorMessage={this.props.fullNameInputErrorMessage}
-          isValid={this.props.isValidInputFullName}
-        >
-          <StyledInput
-            type="text"
-            data-testid="inputFullName"
-            placeholder="John Johnson"
-            ref={this.props.fullNameInput}
-          />
-        </InputControl>
-        <InputControl
-          maxWidth={10.5}
-          labelValue="Birthday date"
-          testErrorId="dateError"
-          errorMessage={this.props.birthdayInputErrorMessage}
-          isValid={this.props.isValidInputBirthday}
-        >
-          <StyledInput type="date" data-testid="inputDate" ref={this.props.birthdayInput} />
-        </InputControl>
-        <InputControl
-          maxWidth={8}
-          labelValue="Profile picture"
-          testErrorId="fileError"
-          errorMessage={this.props.fileInputErrorMessage}
-          isValid={this.props.isValidInputFile}
-        >
-          <FileInput type="file" data-testid="inputFile" ref={this.props.fileInput} />
-        </InputControl>
-        <GenderInput />
-      </FormBlock>
-    );
-  }
-}
+export const FormPersonalInfo = (props: FormPersonalInfoProps) => {
+  return (
+    <FormBlock wrapContentWidth={910} title="Personal Info">
+      <InputFullName
+        errorMessage={props.fullNameInputErrorMessage}
+        isValid={props.isValidInputFullName}
+        refInput={props.fullNameInput}
+      />
+      <InputBirthday
+        errorMessage={props.birthdayInputErrorMessage}
+        isValid={props.isValidInputBirthday}
+        refInput={props.birthdayInput}
+      />
+      <InputFileImage
+        errorMessage={props.fileInputErrorMessage}
+        isValid={props.isValidInputFile}
+        refInput={props.fileInput}
+      />
+      <GenderInput />
+    </FormBlock>
+  );
+};

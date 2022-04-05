@@ -1,3 +1,5 @@
+import { RefObject } from 'react';
+
 export type MovieData = {
   adult: boolean;
   backdrop_path: string;
@@ -18,4 +20,10 @@ export type MovieData = {
 export type GenreData = {
   id: number;
   name: string;
+};
+
+export type InputFormProps = {
+  errorMessage: string;
+  isValid: boolean;
+  refInput: RefObject<HTMLInputElement>;
 };
