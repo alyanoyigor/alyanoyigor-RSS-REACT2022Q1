@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { FormCard } from './index';
 
 describe('Form Card', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     const CARD_TEST_PROPS = {
       fullName: 'Ann',
       birthday: new Date('2000-02-02'),
