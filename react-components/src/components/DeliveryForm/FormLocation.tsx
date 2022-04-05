@@ -1,7 +1,7 @@
 import React, { RefObject } from 'react';
-import { StyledInput } from '../StyledInput';
 import { FormBlock } from './FormBlock';
 import { InputControl } from './InputControl';
+import { InputZipCode } from './InputZipCode';
 import { SelectCity } from './SelectCity';
 import { SelectCountry } from './SelectCountry';
 
@@ -51,20 +51,11 @@ export class FormLocation extends React.Component<FormLocationProps, { countryId
         >
           <SelectCity countryId={this.state.countryId} citySelect={this.props.citySelect} />
         </InputControl>
-        <InputControl
+        <InputZipCode
           errorMessage={this.props.zipCodeInputErrorMessage}
           isValid={this.props.isValidInputZipCode}
-          testErrorId="zipCodeError"
-          maxWidth={20}
-          labelValue="Zip code"
-        >
-          <StyledInput
-            ref={this.props.zipCodeInput}
-            data-testid="zipCodeInput"
-            type="number"
-            placeholder="#####"
-          />
-        </InputControl>
+          refInput={this.props.zipCodeInput}
+        />
       </FormBlock>
     );
   }

@@ -59,23 +59,24 @@ export const FormCard = ({
   const year = birthday.getFullYear();
   const month = birthday.toLocaleString('en-US', { month: 'short' });
   const day = birthday.toLocaleString('en-US', { day: '2-digit' });
+
   const firtLetterOfGender = gender.toUpperCase().slice(0, 1);
   return (
     <FormCardWrapper>
       <TextContainer>
-        <FullNameTitle>
+        <FullNameTitle data-testid="title-form-card">
           <span className="gender">{firtLetterOfGender === 'M' ? '🤵' : '👩‍💼'}</span>
           {fullName}
         </FullNameTitle>
-        <Text>
+        <Text data-testid="birthday-form-card">
           📅 {month} {day}, {year}
         </Text>
-        <Text>
-          📍 {country}, {city}, {zipCode}
+        <Text data-testid="location-form-card">
+          📍 {city}, {country}, {zipCode}
         </Text>
       </TextContainer>
       <div>
-        <CardImg src={srcImg} alt="" />
+        <CardImg data-testid="image-form-card" src={srcImg} alt="" />
       </div>
     </FormCardWrapper>
   );
