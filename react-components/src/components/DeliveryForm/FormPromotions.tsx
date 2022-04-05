@@ -27,6 +27,7 @@ export const FormPromotions = ({
         isValid={isValidCheckboxPrivacy}
         errorMessage={checkboxPrivacyErrorMessage}
         labelValue="I agree to privacy policy"
+        testId="checkboxPrivacy"
       />
       <FormCheckbox isValid={true} labelValue="I wish to be notified of promotions" />
     </CheckboxWrapper>

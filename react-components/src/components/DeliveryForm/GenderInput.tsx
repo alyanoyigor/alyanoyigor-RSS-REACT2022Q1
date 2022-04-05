@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import styled from 'styled-components';
 
 const RadioLabel = styled.label`
@@ -63,19 +63,30 @@ const GenderWrapper = styled.div`
   flex-direction: column;
 `;
 
-export const GenderInput = () => {
+type GenderInputProps = {
+  genderRadioInput: RefObject<HTMLInputElement>;
+};
+
+export const GenderInput = ({ genderRadioInput }: GenderInputProps) => {
   return (
     <GenderWrapper>
       <GenderTitle>Gender</GenderTitle>
       <div>
         <RadioLabel className="container">
           Male
-          <input type="radio" name="gender" value="male" defaultChecked />
+          <input
+            type="radio"
+            name="gender"
+            value="male"
+            ref={genderRadioInput}
+            data-testid="gender-male"
+            defaultChecked
+          />
           <Checkmark className="checkmark"></Checkmark>
         </RadioLabel>
         <RadioLabel className="container">
           Female
-          <input type="radio" name="gender" value="female" />
+          <input type="radio" name="gender" ref={genderRadioInput} value="female" />
           <Checkmark className="checkmark"></Checkmark>
         </RadioLabel>
       </div>

@@ -27,3 +27,13 @@ export type InputFormProps = {
   isValid: boolean;
   refInput: RefObject<HTMLInputElement>;
 };
+
+export type DeliveryCard = {
+  fullName: string;
+  birthday: Date;
+  srcImg: string;
+  gender: string;
+  country: string;
+  city: string;
+  zipCode: string;
+};

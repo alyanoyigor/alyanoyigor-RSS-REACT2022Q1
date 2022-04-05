@@ -66,6 +66,7 @@ type FormCheckboxProps = {
   labelValue: string;
   isValid: boolean;
   errorMessage?: string;
+  testId?: string;
   checkboxPrivacy?: RefObject<HTMLInputElement>;
 };
 
@@ -74,11 +75,12 @@ export const FormCheckbox = ({
   checkboxPrivacy,
   isValid,
   errorMessage,
+  testId,
 }: FormCheckboxProps) => {
   return (
     <CheckboxLabel>
       {labelValue}
-      <CheckboxInput ref={checkboxPrivacy} type="checkbox" />
+      <CheckboxInput type="checkbox" data-testid={testId} ref={checkboxPrivacy} />
       <Checkmark className="checkmark" isValid={isValid} />
       <span className="error-message">{errorMessage}</span>
     </CheckboxLabel>

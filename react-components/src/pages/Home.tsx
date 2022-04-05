@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { CardsList } from '../components/MovieCards/CardsList';
 import { HomeToolbar } from '../components/HomeToolbar';
-import { Search } from '../components/Search';
+import { SearchField } from '../components/SearchField';
 
 const HomeWrapper = styled.div`
   display: flex;
@@ -14,7 +14,7 @@ export const Home = () => {
     <HomeWrapper>
       <HomeToolbar>
         <h1 data-testid="home-title">Home</h1>
-        <Search />
+        <SearchField />
       </HomeToolbar>
       <CardsList />
     </HomeWrapper>

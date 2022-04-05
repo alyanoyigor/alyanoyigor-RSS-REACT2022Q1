@@ -15,6 +15,7 @@ type FormPersonalInfoProps = {
   fileInput: RefObject<HTMLInputElement>;
   fileInputErrorMessage: string;
   isValidInputFile: boolean;
+  genderRadioInput: RefObject<HTMLInputElement>;
 };
 
 export const FormPersonalInfo = (props: FormPersonalInfoProps) => {
@@ -35,7 +36,7 @@ export const FormPersonalInfo = (props: FormPersonalInfoProps) => {
         isValid={props.isValidInputFile}
         refInput={props.fileInput}
       />
-      <GenderInput />
+      <GenderInput genderRadioInput={props.genderRadioInput} />
     </FormBlock>
   );
 };
