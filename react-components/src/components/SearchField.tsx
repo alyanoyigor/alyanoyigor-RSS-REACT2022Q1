@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { SearchInput } from './StyledInput';
 
-export class Search extends React.Component<Record<string, unknown>, { searchValue: string }> {
+export class SearchField extends React.Component<Record<string, unknown>, { searchValue: string }> {
   constructor(props: Record<string, unknown>) {
     super(props);
     this.state = { searchValue: '' };
