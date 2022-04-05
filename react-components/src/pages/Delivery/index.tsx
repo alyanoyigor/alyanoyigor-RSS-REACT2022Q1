@@ -1,12 +1,12 @@
 import React, { ChangeEvent, RefObject } from 'react';
-import { FormLocation } from '../components/DeliveryForm/FormLocation';
-import { FormPersonalInfo } from '../components/DeliveryForm/FormPersonalInfo';
-import { FormPromotions } from '../components/DeliveryForm/FormPromotions';
-import { SubmitBtn } from '../components/DeliveryForm/SubmitBtn';
-import { DeliveryCard } from '../interfaces';
-import ReactIcon from '../assets/logo192.png';
+import { FormLocation } from '../../components/DeliveryForm/FormLocation';
+import { FormPersonalInfo } from '../../components/DeliveryForm/FormPersonalInfo';
+import { FormPromotions } from '../../components/DeliveryForm/FormPromotions';
+import { SubmitBtn } from '../../components/DeliveryForm/SubmitBtn';
+import { DeliveryCard } from '../../interfaces';
+import ReactIcon from '../../assets/logo192.png';
 import styled from 'styled-components';
-import { FormCardsList } from '../components/DeliveryForm/FormCardsList';
+import { FormCardsList } from '../../components/DeliveryForm/FormCardsList';
 
 const Form = styled.form`
   padding: 2rem;

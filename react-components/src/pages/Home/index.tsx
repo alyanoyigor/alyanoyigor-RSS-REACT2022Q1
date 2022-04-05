@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CardsList } from '../components/MovieCards/CardsList';
-import { HomeToolbar } from '../components/HomeToolbar';
-import { SearchField } from '../components/SearchField';
+import { CardsList } from '../../components/MovieCards/CardsList';
+import { HomeToolbar } from '../../components/HomeToolbar';
+import { SearchField } from '../../components/SearchField';
 
 const HomeWrapper = styled.div`
   display: flex;
