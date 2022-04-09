@@ -1,8 +1,6 @@
-import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
 import { Card } from './Card';
-import { MOVIE_API_KEY } from '../../config';
 import { GenreData, MovieData } from '../../interfaces';
 import { Preloader } from '../Preloader';
 
@@ -17,50 +15,31 @@ const ListWrapper = styled.ul`
 
 type CardsListProps = {
   moviesData: MovieData[];
+  genresData: GenreData[];
+  isFetching: boolean;
 };
 
-export class CardsList extends React.Component<
-  CardsListProps,
-  { moviesData: MovieData[]; genresData: GenreData[] }
-> {
+export class CardsList extends React.Component<CardsListProps> {
   constructor(props: CardsListProps) {
     super(props);
-    this.state = { moviesData: [], genresData: [] };
   }
 
-  componentDidMount() {
-    this.getMovieGenres().then((data) =>
-      this.setState((prevState) => ({ ...prevState, genresData: data }))
-    );
-  }
-
-  async getMovieGenres() {
-    try {
-      const genresRequest = await axios.get(
-        `https://api.themoviedb.org/3/genre/movie/list?api_key=${MOVIE_API_KEY}`
-      );
-      return genresRequest.data.genres;
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  componentWillUnmount() {
-    this.setState = () => {};
-  }
-
-  getGenresFromMovie(movieGenreIds: number[]) {
-    return this.state.genresData.filter((genre) => movieGenreIds.find((id) => id === genre.id));
+  filterGenresFromMovie(movieGenreIds: number[]) {
+    return this.props.genresData.filter((genre) => movieGenreIds.find((id) => id === genre.id));
   }
 
   render() {
+    if (this.props.isFetching) {
+      return <Preloader />;
+    }
+
     return (
       <ListWrapper data-testid="card-list">
         {!this.props.moviesData.length ? (
           <h2>Nothing was found</h2>
         ) : (
           this.props.moviesData.map((movie: MovieData) => (
-            <Card key={movie.id} genres={this.getGenresFromMovie(movie.genre_ids)} {...movie} />
+            <Card key={movie.id} genres={this.filterGenresFromMovie(movie.genre_ids)} {...movie} />
           ))
         )}
       </ListWrapper>

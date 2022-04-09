@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import DefaultImg from '../assets/oops-404.jpg';
 
 const PosterWrapper = styled.div`
   position: relative;
@@ -50,9 +51,13 @@ type Poster = {
 };
 
 export const PosterImage = ({ poster_path, vote_average, title }: Poster) => {
+  let imgSrc = DefaultImg;
+  if (poster_path) {
+    imgSrc = MOVIE_IMAGE_URL + poster_path;
+  }
   return (
     <PosterWrapper>
-      <Image src={MOVIE_IMAGE_URL + poster_path} alt={title} />
+      <Image src={imgSrc} alt={title} />
       <RatedWrapper>
         <RatedText>{vote_average}</RatedText>
       </RatedWrapper>
