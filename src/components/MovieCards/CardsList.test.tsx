@@ -86,7 +86,7 @@ describe('Cards List', () => {
 
   it('Render cards', async () => {
     mockedAxios.get.mockResolvedValue({ data: { results: testMovieData, genres: testGenresData } });
-    render(<CardsList />);
+    render(<CardsList moviesData={[]} />);
 
     const cards = await screen.findAllByTestId('card-item');
     expect(cards.length).toBe(3);
@@ -94,7 +94,7 @@ describe('Cards List', () => {
 
   it('Cards have titles', async () => {
     mockedAxios.get.mockResolvedValue({ data: { results: testMovieData, genres: testGenresData } });
-    render(<CardsList />);
+    render(<CardsList moviesData={[]} />);
 
     expect(await screen.findByText(/Turning Red/i)).toBeInTheDocument();
     expect(await screen.findByText(/Spider-Man/i)).toBeInTheDocument();
@@ -123,7 +123,7 @@ describe('Cards List', () => {
     ];
 
     mockedAxios.get.mockResolvedValue({ data: { results: testMovieData, genres: testGenresData } });
-    render(<CardsList />);
+    render(<CardsList moviesData={[]} />);
     expect(await screen.findByText(/Animation/i)).toBeInTheDocument();
     expect(await screen.findByText(/Comedy/i)).toBeInTheDocument();
     expect(screen.queryByText(/Action/i)).not.toBeInTheDocument();

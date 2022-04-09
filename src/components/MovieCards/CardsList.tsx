@@ -15,36 +15,23 @@ const ListWrapper = styled.ul`
   padding: 0;
 `;
 
+type CardsListProps = {
+  moviesData: MovieData[];
+};
+
 export class CardsList extends React.Component<
-  Record<string, unknown>,
+  CardsListProps,
   { moviesData: MovieData[]; genresData: GenreData[] }
 > {
-  constructor(props: Record<string, unknown>) {
+  constructor(props: CardsListProps) {
     super(props);
     this.state = { moviesData: [], genresData: [] };
   }
+
   componentDidMount() {
-    this.getMovieData(1).then((data) =>
-      this.setState((prevState) => ({ ...prevState, moviesData: data }))
-    );
     this.getMovieGenres().then((data) =>
       this.setState((prevState) => ({ ...prevState, genresData: data }))
     );
-  }
-
-  componentWillUnmount() {
-    this.setState = () => {};
-  }
-
-  async getMovieData(page: number) {
-    try {
-      const moviesRequest = await axios.get(
-        `https://api.themoviedb.org/3/movie/popular?page=${page}&api_key=${MOVIE_API_KEY}`
-      );
-      return moviesRequest.data.results;
-    } catch (e) {
-      console.log(e);
-    }
   }
 
   async getMovieGenres() {
@@ -58,6 +45,10 @@ export class CardsList extends React.Component<
     }
   }
 
+  componentWillUnmount() {
+    this.setState = () => {};
+  }
+
   getGenresFromMovie(movieGenreIds: number[]) {
     return this.state.genresData.filter((genre) => movieGenreIds.find((id) => id === genre.id));
   }
@@ -65,10 +56,10 @@ export class CardsList extends React.Component<
   render() {
     return (
       <ListWrapper data-testid="card-list">
-        {!this.state.moviesData.length ? (
-          <Preloader />
+        {!this.props.moviesData.length ? (
+          <h2>Nothing was found</h2>
         ) : (
-          this.state.moviesData.map((movie: MovieData) => (
+          this.props.moviesData.map((movie: MovieData) => (
             <Card key={movie.id} genres={this.getGenresFromMovie(movie.genre_ids)} {...movie} />
           ))
         )}

@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 
 describe('Search', () => {
   it('Render search', () => {
-    render(<SearchField />);
+    render(<SearchField onChangeMoviesList={() => {}} />);
     const input: HTMLInputElement = screen.getByRole('search');
     expect(input).toBeInTheDocument();
     expect(input).toHaveStyle({ backgroundImage: `url(${SearchIcon})` });
