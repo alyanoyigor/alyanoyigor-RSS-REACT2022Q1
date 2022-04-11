@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Card } from './Card';
 import { GenreData, MovieData } from '../../interfaces';
 import { Preloader } from '../Preloader';
+import { ModalCard } from './ModalCard';
 
 const ListWrapper = styled.ul`
   display: flex;
@@ -19,13 +20,27 @@ type CardsListProps = {
   isFetching: boolean;
 };
 
-export class CardsList extends React.Component<CardsListProps> {
+export class CardsList extends React.Component<
+  CardsListProps,
+  { isOpenCardModal: boolean; cardId: string }
+> {
   constructor(props: CardsListProps) {
     super(props);
+    this.state = { isOpenCardModal: false, cardId: '' };
+    this.handleChangeCard = this.handleChangeCard.bind(this);
   }
 
   filterGenresFromMovie(movieGenreIds: number[]) {
     return this.props.genresData.filter((genre) => movieGenreIds.find((id) => id === genre.id));
+  }
+
+  handleChangeCard(e: React.MouseEvent<HTMLUListElement>) {
+    if (e.target instanceof HTMLElement) {
+      const movieCard: HTMLElement | null = e.target.closest('.movie-card');
+      if (movieCard && movieCard.dataset.cardid) {
+        this.setState({ isOpenCardModal: true, cardId: movieCard.dataset.cardid });
+      }
+    }
   }
 
   render() {
@@ -34,15 +49,29 @@ export class CardsList extends React.Component<CardsListProps> {
     }
 
     return (
-      <ListWrapper data-testid="card-list">
-        {!this.props.moviesData.length ? (
-          <h2>Nothing was found</h2>
-        ) : (
-          this.props.moviesData.map((movie: MovieData) => (
-            <Card key={movie.id} genres={this.filterGenresFromMovie(movie.genre_ids)} {...movie} />
-          ))
+      <>
+        {this.state.isOpenCardModal && (
+          <ModalCard
+            cardId={this.state.cardId}
+            onConfirm={() => this.setState({ isOpenCardModal: false })}
+          />
         )}
-      </ListWrapper>
+        <ListWrapper data-testid="card-list" onClick={this.handleChangeCard}>
+          {!this.props.moviesData.length ? (
+            <h2>Nothing was found</h2>
+          ) : (
+            this.props.moviesData.map((movie: MovieData) => (
+              <Card
+                className="movie-card"
+                cardId={movie.id}
+                key={movie.id}
+                genres={this.filterGenresFromMovie(movie.genre_ids)}
+                {...movie}
+              />
+            ))
+          )}
+        </ListWrapper>
+      </>
     );
   }
 }

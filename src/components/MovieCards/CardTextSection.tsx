@@ -23,7 +23,7 @@ type CardTextSectionProps = {
   title: string;
   genres: GenreData[];
   popularity: number;
-  release_date: string;
+  release_date: string | null;
 };
 
 export const CardTextSection = ({
@@ -32,16 +32,18 @@ export const CardTextSection = ({
   popularity,
   release_date,
 }: CardTextSectionProps) => {
-  const month = new Date(release_date).toLocaleString('en-US', { month: 'long' }).slice(0, 3);
-  const day = new Date(release_date).toLocaleString('en-US', { day: '2-digit' });
-  const year = new Date(release_date).getFullYear();
+  let date = 'unknown';
+  if (release_date) {
+    const month = new Date(release_date).toLocaleString('en-US', { month: 'long' }).slice(0, 3);
+    const day = new Date(release_date).toLocaleString('en-US', { day: '2-digit' });
+    const year = new Date(release_date).getFullYear();
+    date = `${month} ${day}, ${year}`;
+  }
 
   return (
     <CardTextWrapper>
       <CardTitle>{title}</CardTitle>
-      <CarDate>
-        {month} {day}, {year}
-      </CarDate>
+      <CarDate>{date}</CarDate>
       <MovieGenres genres={genres} />
       <CardButtons popularity={popularity} />
     </CardTextWrapper>

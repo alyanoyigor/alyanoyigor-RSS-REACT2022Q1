@@ -9,6 +9,7 @@ const PreloaderIcon = styled.img.attrs({ src: LoaderIcon, alt: '' })`
   transform: translate(-50%, -50%);
   width: 5rem;
   height: 5rem;
+  z-index: 100;
 `;
 
 export const Preloader = () => {

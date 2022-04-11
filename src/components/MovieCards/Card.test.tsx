@@ -14,6 +14,8 @@ describe('Card', () => {
         { id: 2, name: 'Comedy' },
       ],
       release_date: '2021-12-15',
+      className: 'movie-card',
+      cardId: 1290,
     };
   });
   it('Check elements inside card', () => {

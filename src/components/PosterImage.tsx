@@ -45,7 +45,7 @@ const RatedText = styled.span`
 const MOVIE_IMAGE_URL = 'https://image.tmdb.org/t/p/w300_and_h450_bestv2';
 
 type Poster = {
-  poster_path: string;
+  poster_path: string | null;
   vote_average: number;
   title: string;
 };

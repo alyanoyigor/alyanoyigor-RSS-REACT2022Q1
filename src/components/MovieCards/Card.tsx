@@ -13,6 +13,7 @@ const CardWrapper = styled.li`
   overflow: hidden;
   -webkit-box-shadow: 5px 5px 10px 5px rgba(15, 60, 76, 0.15);
   box-shadow: 5px 5px 10px 5px rgba(15, 60, 76, 0.15);
+  cursor: pointer;
 
   @media screen and (max-width: 880px) {
     max-width: 12rem;
@@ -25,30 +26,39 @@ const CardWrapper = styled.li`
 
 export type CardProps = {
   popularity: number;
-  poster_path: string;
-  release_date: string;
+  poster_path: string | null;
+  release_date: string | null;
   title: string;
   vote_average: number;
   genres: GenreData[];
+  className: string;
+  cardId: number;
 };
 
-export const Card = ({
-  poster_path,
-  title,
-  vote_average,
-  popularity,
-  genres,
-  release_date,
-}: CardProps) => {
-  return (
-    <CardWrapper data-testid="card-item">
-      <PosterImage poster_path={poster_path} title={title} vote_average={vote_average} />
-      <CardTextSection
-        popularity={popularity}
-        title={title}
-        genres={genres}
-        release_date={release_date}
-      />
-    </CardWrapper>
-  );
-};
+export class Card extends React.Component<CardProps> {
+  constructor(props: CardProps) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <CardWrapper
+        className={this.props.className}
+        data-cardid={this.props.cardId}
+        data-testid="card-item"
+      >
+        <PosterImage
+          poster_path={this.props.poster_path}
+          title={this.props.title}
+          vote_average={this.props.vote_average}
+        />
+        <CardTextSection
+          popularity={this.props.popularity}
+          title={this.props.title}
+          genres={this.props.genres}
+          release_date={this.props.release_date}
+        />
+      </CardWrapper>
+    );
+  }
+}
