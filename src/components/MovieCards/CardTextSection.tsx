@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { GenreData } from '../../interfaces';
+import { convertDate } from '../../utils';
 import { CardButtons } from './CardButtons';
 import { MovieGenres } from './MovieGenres';
 
@@ -34,10 +35,8 @@ export const CardTextSection = ({
 }: CardTextSectionProps) => {
   let date = 'unknown';
   if (release_date) {
-    const month = new Date(release_date).toLocaleString('en-US', { month: 'long' }).slice(0, 3);
-    const day = new Date(release_date).toLocaleString('en-US', { day: '2-digit' });
-    const year = new Date(release_date).getFullYear();
-    date = `${month} ${day}, ${year}`;
+    const convertedDate = convertDate(release_date, { month: 'long' });
+    date = `${convertedDate.month} ${convertedDate.day}, ${convertedDate.year}`;
   }
 
   return (

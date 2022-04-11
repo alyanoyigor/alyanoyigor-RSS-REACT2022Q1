@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import DefaultImg from '../assets/oops-404.jpg';
+import { MOVIE_POSTER_URL } from '../urls';
 
 const PosterWrapper = styled.div`
   position: relative;
@@ -42,8 +43,6 @@ const RatedText = styled.span`
   color: #fff;
 `;
 
-const MOVIE_IMAGE_URL = 'https://image.tmdb.org/t/p/w300_and_h450_bestv2';
-
 type Poster = {
   poster_path: string | null;
   vote_average: number;
@@ -53,7 +52,7 @@ type Poster = {
 export const PosterImage = ({ poster_path, vote_average, title }: Poster) => {
   let imgSrc = DefaultImg;
   if (poster_path) {
-    imgSrc = MOVIE_IMAGE_URL + poster_path;
+    imgSrc = MOVIE_POSTER_URL + poster_path;
   }
   return (
     <PosterWrapper>

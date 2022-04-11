@@ -19,7 +19,7 @@ export type MovieData = {
 
 export type DetailedMovieData = {
   adult: boolean;
-  backdrop_path: string;
+  backdrop_path: string | null;
   belongs_to_collection: {
     id: number;
     name: string;
@@ -38,7 +38,7 @@ export type DetailedMovieData = {
   original_title: string;
   overview: string;
   popularity: number;
-  poster_path: string;
+  poster_path: string | null;
   production_companies: {
     id: number;
     logo_path: string;
