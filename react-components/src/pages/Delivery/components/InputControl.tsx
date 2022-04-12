@@ -9,8 +9,8 @@ type InputControlProps = {
 } & InputWrapperProps;
 
 type InputWrapperProps = {
-  maxWidth?: number;
   isValid: boolean;
+  maxWidth?: number;
 };
 
 export const InputWrapper = styled.div`
