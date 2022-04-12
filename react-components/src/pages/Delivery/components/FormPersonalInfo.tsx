@@ -18,25 +18,36 @@ type FormPersonalInfoProps = {
   genderRadioInput: RefObject<HTMLInputElement>;
 };
 
-export const FormPersonalInfo = (props: FormPersonalInfoProps) => {
+export const FormPersonalInfo = ({
+  fullNameInputErrorMessage,
+  isValidInputFullName,
+  fullNameInput,
+  birthdayInputErrorMessage,
+  isValidInputBirthday,
+  birthdayInput,
+  fileInputErrorMessage,
+  isValidInputFile,
+  fileInput,
+  genderRadioInput,
+}: FormPersonalInfoProps) => {
   return (
     <FormBlock wrapContentWidth={910} title="Personal Info">
       <InputFullName
-        errorMessage={props.fullNameInputErrorMessage}
-        isValid={props.isValidInputFullName}
-        refInput={props.fullNameInput}
+        errorMessage={fullNameInputErrorMessage}
+        isValid={isValidInputFullName}
+        refInput={fullNameInput}
       />
       <InputBirthday
-        errorMessage={props.birthdayInputErrorMessage}
-        isValid={props.isValidInputBirthday}
-        refInput={props.birthdayInput}
+        errorMessage={birthdayInputErrorMessage}
+        isValid={isValidInputBirthday}
+        refInput={birthdayInput}
       />
       <InputFileImage
-        errorMessage={props.fileInputErrorMessage}
-        isValid={props.isValidInputFile}
-        refInput={props.fileInput}
+        errorMessage={fileInputErrorMessage}
+        isValid={isValidInputFile}
+        refInput={fileInput}
       />
-      <GenderInput genderRadioInput={props.genderRadioInput} />
+      <GenderInput genderRadioInput={genderRadioInput} />
     </FormBlock>
   );
 };

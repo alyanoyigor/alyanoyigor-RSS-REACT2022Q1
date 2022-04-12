@@ -9,6 +9,6 @@ const HomeToolbarWrapper = styled.div`
   gap: 1rem;
 `;
 
-export const HomeToolbar: React.FC<Record<string, unknown>> = ({ children }) => {
+export const HomeToolbar = ({ children }: { children: React.ReactNode }) => {
   return <HomeToolbarWrapper>{children}</HomeToolbarWrapper>;
 };

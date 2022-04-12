@@ -19,7 +19,7 @@ const Form = styled.form`
   }
 `;
 
-type ValidityInput = {
+interface ValidityInput {
   isValidBirthdayInput: boolean;
   isValidFullNameInput: boolean;
   isValidFileInput: boolean;
@@ -27,9 +27,9 @@ type ValidityInput = {
   isValidCitySelect: boolean;
   isValidInputZipCode: boolean;
   isValidCheckboxPrivacy: boolean;
-};
+}
 
-type ErrorMessageInput = {
+interface ErrorMessageInput {
   birthdayInputErrorMessage: string;
   fullNameInputErrorMessage: string;
   fileInputErrorMessage: string;
@@ -37,14 +37,14 @@ type ErrorMessageInput = {
   citySelectErrorMessage: string;
   zipCodeInputErrorMessage: string;
   checkboxPrivacyErrorMessage: string;
-};
+}
 
-type FormState = {
+interface FormState {
   isDisabledSubmitBtn: boolean;
   cardsState: DeliveryCard[];
   validityInputs: ValidityInput;
   errorMessages: ErrorMessageInput;
-};
+}
 
 const INITIAL_STATE: FormState = {
   isDisabledSubmitBtn: true,

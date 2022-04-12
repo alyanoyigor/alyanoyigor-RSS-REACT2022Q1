@@ -7,7 +7,7 @@ const Wrapper = styled.main`
   padding: 1rem 0;
 `;
 
-export const Main: React.FC<Record<string, unknown>> = ({ children }) => {
+export const Main = ({ children }: { children: React.ReactNode }) => {
   return (
     <Wrapper>
       <Container>{children}</Container>

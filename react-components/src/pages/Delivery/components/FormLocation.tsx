@@ -5,7 +5,7 @@ import { InputZipCode } from './InputZipCode';
 import { SelectCity } from './SelectCity';
 import { SelectCountry } from './SelectCountry';
 
-type FormLocationProps = {
+interface FormLocationProps {
   countrySelect: RefObject<HTMLSelectElement>;
   countrySelectErrorMessage: string;
   isValidCountrySelect: boolean;
@@ -15,7 +15,7 @@ type FormLocationProps = {
   zipCodeInput: RefObject<HTMLInputElement>;
   zipCodeInputErrorMessage: string;
   isValidInputZipCode: boolean;
-};
+}
 
 export class FormLocation extends React.Component<FormLocationProps, { countryId: number | null }> {
   constructor(props: FormLocationProps) {
