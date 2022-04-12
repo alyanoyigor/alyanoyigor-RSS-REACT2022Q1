@@ -14,7 +14,7 @@ const SearchInput = styled.input`
   background-size: 1.2rem;
 `;
 
-export class Search extends React.Component<Record<string, unknown>, { searchValue: string }> {
+export class SearchField extends React.Component<Record<string, unknown>, { searchValue: string }> {
   constructor(props: Record<string, unknown>) {
     super(props);
     this.state = { searchValue: '' };
