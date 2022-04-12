@@ -64,19 +64,17 @@ export class Home extends React.Component<
 
   createMoviesData(searchValue: string | null) {
     this.setState((prevState) => ({ ...prevState, isFetching: true }));
-    setTimeout(() => {
-      if (searchValue) {
-        this.findMovieBySearchFieldValue(searchValue, 1).then((moviesData: MovieData[]) => {
-          this.setState((prevState) => ({ ...prevState, moviesData }));
-          this.setState((prevState) => ({ ...prevState, isFetching: false }));
-        });
-      } else {
-        this.getMovieData(1).then((moviesData) => {
-          this.setState((prevState) => ({ ...prevState, moviesData }));
-          this.setState((prevState) => ({ ...prevState, isFetching: false }));
-        });
-      }
-    }, 1000);
+    if (searchValue) {
+      this.findMovieBySearchFieldValue(searchValue, 1).then((moviesData: MovieData[]) => {
+        this.setState((prevState) => ({ ...prevState, moviesData }));
+        this.setState((prevState) => ({ ...prevState, isFetching: false }));
+      });
+    } else {
+      this.getMovieData(1).then((moviesData) => {
+        this.setState((prevState) => ({ ...prevState, moviesData }));
+        this.setState((prevState) => ({ ...prevState, isFetching: false }));
+      });
+    }
   }
 
   componentWillUnmount() {

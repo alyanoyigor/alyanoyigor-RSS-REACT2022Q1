@@ -49,7 +49,7 @@ export type DetailedMovieData = {
     iso_3166_1: string;
     name: string;
   }[];
-  release_date: string;
+  release_date: string | null;
   revenue: number;
   runtime: number;
   spoken_languages: {

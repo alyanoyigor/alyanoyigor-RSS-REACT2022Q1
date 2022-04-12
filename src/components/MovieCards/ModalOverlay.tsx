@@ -51,7 +51,7 @@ const Modal = styled.div`
   @media (max-width: 768px) {
     height: 80%;
     gap: 1rem;
-    align-content: center;
+    align-content: flex-start;
     flex-wrap: wrap;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -127,27 +127,34 @@ type ModalOverlayProps = {
 };
 
 export const ModalOverlay = ({ movieData, onConfirm }: ModalOverlayProps) => {
-  const convertedDate = convertDate(movieData.release_date, { month: '2-digit' });
-  const posterPath = movieData.poster_path ? MOVIE_POSTER_URL + movieData.poster_path : DefaultImg;
-  const movieGenres = movieData.genres.length
-    ? movieData.genres.map((genre) => genre.name).join(', ')
+  const convertedDate = movieData.release_date
+    ? convertDate(movieData.release_date, { month: '2-digit' })
     : null;
+  const date = convertedDate ? (
+    <span data-testid="modal-card-date">
+      {convertedDate.day}/{convertedDate.month}/{convertedDate.year}
+    </span>
+  ) : null;
+  const posterPath = movieData.poster_path ? MOVIE_POSTER_URL + movieData.poster_path : DefaultImg;
+  const movieGenres = movieData.genres.length ? (
+    <span data-testid="modal-card-genres">
+      {movieData.genres.map((genre) => genre.name).join(', ')}
+    </span>
+  ) : null;
   return (
-    <Modal bg={movieData.backdrop_path}>
-      <CloseBtn onClick={onConfirm} />
+    <Modal data-testid="modal-card" bg={movieData.backdrop_path}>
+      <CloseBtn data-testid="modal-card-close-btn" onClick={onConfirm} />
       <ImageWrapper>
-        <img src={posterPath} alt={movieData.title} />
+        <img data-testid="modal-card-poster" src={posterPath} alt={movieData.title} />
       </ImageWrapper>
       <div>
         <div>
           <Title>
-            {movieData.title} <span>({convertedDate.year})</span>
+            {movieData.title} {convertedDate && <span>({convertedDate.year})</span>}
           </Title>
           <MovieDetails>
-            <span>
-              {convertedDate.day}/{convertedDate.month}/{convertedDate.year}
-            </span>
-            <span>{movieGenres}</span>
+            {date}
+            {movieGenres}
             <span>{convertTime(movieData.runtime)}</span>
           </MovieDetails>
         </div>

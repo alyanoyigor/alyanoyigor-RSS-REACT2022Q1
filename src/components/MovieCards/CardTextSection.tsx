@@ -36,13 +36,13 @@ export const CardTextSection = ({
   let date = 'unknown';
   if (release_date) {
     const convertedDate = convertDate(release_date, { month: 'long' });
-    date = `${convertedDate.month} ${convertedDate.day}, ${convertedDate.year}`;
+    date = `${convertedDate.month.slice(0, 3)} ${convertedDate.day}, ${convertedDate.year}`;
   }
 
   return (
     <CardTextWrapper>
-      <CardTitle>{title}</CardTitle>
-      <CarDate>{date}</CarDate>
+      <CardTitle data-testid="card-title">{title}</CardTitle>
+      <CarDate data-testid="card-date">{date}</CarDate>
       <MovieGenres genres={genres} />
       <CardButtons popularity={popularity} />
     </CardTextWrapper>

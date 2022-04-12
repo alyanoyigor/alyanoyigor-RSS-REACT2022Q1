@@ -1,5 +1,5 @@
-export const convertTime = (num: number) => {
-  const hours = Math.floor(num / 60);
-  const minutes = num % 60;
+export const convertTime = (totalMinutes: number) => {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
   return `${hours}h${minutes}m`;
 };

@@ -20,8 +20,8 @@ const GenreWrapper = styled.span`
   color: #134b5f;
 `;
 
-const Genre: React.FC<Record<string, unknown>> = ({ children }) => {
-  return <GenreWrapper>{children}</GenreWrapper>;
+const Genre = ({ children }: { children: React.ReactNode }) => {
+  return <GenreWrapper data-testid="card-genre">{children}</GenreWrapper>;
 };
 
 type MovieGenresProps = {

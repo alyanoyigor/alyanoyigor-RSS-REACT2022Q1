@@ -13,4 +13,19 @@ describe('Search', () => {
     fireEvent.change(input, { target: { value: 'Test' } });
     expect(input).toContainHTML('Test');
   });
+  it('press enter in input', () => {
+    const handleSearch = jest.fn();
+    const { getByRole } = render(<SearchField onSubmitMovie={handleSearch} />);
+    const input = getByRole('search');
+    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
+    expect(handleSearch).toHaveBeenCalledTimes(1);
+  });
+  it('press not enter in input', () => {
+    const handleSearch = jest.fn();
+    const { getByRole } = render(<SearchField onSubmitMovie={handleSearch} />);
+    const input = getByRole('search');
+    fireEvent.keyDown(input, { key: 'A', code: 'KeyA' });
+    fireEvent.keyDown(input, { key: 'Space', code: 'Space' });
+    expect(handleSearch).toHaveBeenCalledTimes(0);
+  });
 });

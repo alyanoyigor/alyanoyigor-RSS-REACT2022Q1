@@ -56,9 +56,9 @@ export const PosterImage = ({ poster_path, vote_average, title }: Poster) => {
   }
   return (
     <PosterWrapper>
-      <Image src={imgSrc} alt={title} />
+      <Image data-testid="card-img" src={imgSrc} alt={title} />
       <RatedWrapper>
-        <RatedText>{vote_average}</RatedText>
+        <RatedText data-testid="card-rated-text">{vote_average}</RatedText>
       </RatedWrapper>
     </PosterWrapper>
   );

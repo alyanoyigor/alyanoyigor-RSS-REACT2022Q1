@@ -27,14 +27,14 @@ export class CardsList extends React.Component<
   constructor(props: CardsListProps) {
     super(props);
     this.state = { isOpenCardModal: false, cardId: '' };
-    this.handleChangeCard = this.handleChangeCard.bind(this);
+    this.handleOpenModalCard = this.handleOpenModalCard.bind(this);
   }
 
   filterGenresFromMovie(movieGenreIds: number[]) {
     return this.props.genresData.filter((genre) => movieGenreIds.find((id) => id === genre.id));
   }
 
-  handleChangeCard(e: React.MouseEvent<HTMLUListElement>) {
+  handleOpenModalCard(e: React.MouseEvent<HTMLUListElement>) {
     if (e.target instanceof HTMLElement) {
       const movieCard: HTMLElement | null = e.target.closest('.movie-card');
       if (movieCard && movieCard.dataset.cardid) {
@@ -56,7 +56,7 @@ export class CardsList extends React.Component<
             onConfirm={() => this.setState({ isOpenCardModal: false })}
           />
         )}
-        <ListWrapper data-testid="card-list" onClick={this.handleChangeCard}>
+        <ListWrapper data-testid="card-list" onClick={this.handleOpenModalCard}>
           {!this.props.moviesData.length ? (
             <h2>Nothing was found</h2>
           ) : (

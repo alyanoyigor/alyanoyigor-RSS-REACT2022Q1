@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { MOVIE_POSTER_URL } from '../../urls';
 import { Card, CardProps } from './Card';
 describe('Card', () => {
   let testCardProps: CardProps;
@@ -19,7 +20,17 @@ describe('Card', () => {
     };
   });
   it('Check elements inside card', () => {
-    const { container } = render(<Card {...testCardProps} />);
-    expect(container).toMatchSnapshot();
+    render(<Card {...testCardProps} />);
+    expect(screen.getByTestId('card-img')).toHaveAttribute(
+      'src',
+      MOVIE_POSTER_URL + '/qsdjk9oAKSQMWs0Vt5Pyfh6O4GZ.jpg'
+    );
+    expect(screen.getByTestId('card-rated-text').textContent).toBe('8.2');
+    expect(screen.getByTestId('card-title').textContent).toBe('Turning Red');
+    expect(screen.getByTestId('card-date').textContent).toBe('Dec 15, 2021');
+    expect(screen.getAllByTestId('card-genre').map((span) => span.textContent)).toEqual([
+      'Animation',
+      'Comedy',
+    ]);
   });
 });

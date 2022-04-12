@@ -37,9 +37,10 @@ export class ModalCard extends React.Component<
     super(props);
     this.backdropRoot = document.getElementById('backdrop-root');
     this.modalOverlayRoot = document.getElementById('modal-overlay-root');
-    this.state = { movieData: null, isFetching: true };
+    this.state = { movieData: null, isFetching: false };
   }
   componentDidMount() {
+    this.setState({ isFetching: true });
     this.getDetailMovieData().then((movieData) => this.setState({ movieData, isFetching: false }));
   }
 
