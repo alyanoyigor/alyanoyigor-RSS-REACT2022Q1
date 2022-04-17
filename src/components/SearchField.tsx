@@ -1,58 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SearchInput } from './StyledInput';
 
-export class SearchField extends React.Component<
-  { onSubmitMovie: (value: string) => void },
-  { searchValue: string }
-> {
-  constructor(props: { onSubmitMovie: (value: string) => void }) {
-    super(props);
-    this.state = { searchValue: '' };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-  }
+type SearchFieldProps = {
+  onSubmitMovie: (value: string) => void;
+};
 
-  componentDidMount() {
-    const savedSearchValue = localStorage.getItem('searchValue');
-    if (savedSearchValue) {
-      this.setState({
-        searchValue: savedSearchValue,
-      });
-    }
-  }
+export const SearchField = ({ onSubmitMovie }: SearchFieldProps) => {
+  const [searchValue, setSearchValue] = useState('');
 
-  componentWillUnmount() {
-    this.saveValueToLocalStorage(this.state.searchValue);
-  }
-
-  saveValueToLocalStorage(value: string) {
+  const saveValueToLocalStorage = (value: string) => {
     localStorage.setItem('searchValue', value);
-  }
+  };
 
-  handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value;
-    this.setState({ searchValue });
-    this.saveValueToLocalStorage(searchValue);
-  }
+    setSearchValue(searchValue);
+    saveValueToLocalStorage(searchValue);
+  };
 
-  handleSearch(event: React.KeyboardEvent<HTMLInputElement>) {
+  const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       if (event.target instanceof HTMLInputElement) {
-        this.props.onSubmitMovie(event.target.value);
+        onSubmitMovie(event.target.value);
       }
     }
-  }
+  };
 
-  render() {
-    return (
-      <SearchInput
-        type="text"
-        placeholder="Search..."
-        value={this.state.searchValue}
-        onChange={this.handleChange}
-        onKeyDown={this.handleSearch}
-        role="search"
-      />
-    );
-  }
-}
+  useEffect(() => {
+    const savedSearchValue = localStorage.getItem('searchValue');
+    if (savedSearchValue) {
+      setSearchValue(savedSearchValue);
+    }
+    return () => {
+      saveValueToLocalStorage(searchValue);
+    };
+  }, []);
+
+  return (
+    <SearchInput
+      type="text"
+      placeholder="Search..."
+      value={searchValue}
+      onChange={handleChange}
+      onKeyDown={handleEnterPress}
+      role="search"
+    />
+  );
+};
