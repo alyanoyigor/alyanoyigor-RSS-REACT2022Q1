@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { DetailedMovieData } from '../../interfaces';
+import { DetailedMovieData } from '../../types/types';
 import '@testing-library/jest-dom';
 import { ModalOverlay } from './ModalOverlay';
 import DefaultImg from '../../assets/oops-404.jpg';
-import { MOVIE_POSTER_URL } from '../../urls';
+import { MOVIE_POSTER_URL } from '../../urls/urls';
 
 describe('Modal Overlay', () => {
   let testDetailedData: DetailedMovieData;

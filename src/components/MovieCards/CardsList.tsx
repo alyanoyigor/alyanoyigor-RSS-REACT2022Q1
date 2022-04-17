@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Card } from './Card';
-import { GenreData, MovieData } from '../../interfaces';
+import { GenreData, MovieData } from '../../types/types';
 import { Preloader } from '../Preloader';
 import { ModalCard } from './ModalCard';
 

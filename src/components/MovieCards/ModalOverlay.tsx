@@ -1,10 +1,10 @@
 import React from 'react';
-import { MOVIE_COMPANIES_URL, MOVIE_POSTER_BG_URL, MOVIE_POSTER_URL } from '../../urls';
-import { convertDate, convertTime } from '../../utils';
-import DefaultImg from '../../assets/oops-404.jpg';
+import { MOVIE_COMPANIES_URL, MOVIE_POSTER_BG_URL, MOVIE_POSTER_URL } from '../../urls/urls';
+import { convertDate, convertTime } from '../../utils/utils';
+import DefaultImg from '../../assets/defaultPoster.jpg';
 import styled from 'styled-components';
 import { CloseBtn } from '../CloseBtn';
-import { DetailedMovieData } from '../../interfaces';
+import { DetailedMovieData } from '../../types/types';
 
 const ImageWrapper = styled.div`
   max-width: 350px;

@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GenreData } from '../../interfaces';
+import { GenreData } from '../../types/types';
 import { CardTextSection } from './CardTextSection';
 import { PosterImage } from '../PosterImage';
 
 const CardWrapper = styled.li`
   display: flex;
   flex-direction: column;
-  max-width: 16rem;
+  max-width: 256px;
   width: 100%;
   border-radius: 10px;
   overflow: hidden;
@@ -16,7 +16,7 @@ const CardWrapper = styled.li`
   cursor: pointer;
 
   @media screen and (max-width: 880px) {
-    max-width: 12rem;
+    max-width: 192px;
   }
 
   @media screen and (max-width: 488px) {

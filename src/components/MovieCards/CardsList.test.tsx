@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import axios from 'axios';
 import { mocked } from 'jest-mock';
-import { DetailedMovieData, GenreData, MovieData } from '../../interfaces';
+import { DetailedMovieData, GenreData, MovieData } from '../../types/types';
 import { CardsList } from './CardsList';
 
 jest.mock('axios');

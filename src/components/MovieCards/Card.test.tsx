@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { MOVIE_POSTER_URL } from '../../urls';
+import { MOVIE_POSTER_URL } from '../../urls/urls';
 import { Card, CardProps } from './Card';
 describe('Card', () => {
   let testCardProps: CardProps;

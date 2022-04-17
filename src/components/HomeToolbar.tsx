@@ -6,7 +6,7 @@ const HomeToolbarWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  gap: 1rem;
+  gap: 16px;
 `;
 
 export const HomeToolbar: React.FC<Record<string, unknown>> = ({ children }) => {

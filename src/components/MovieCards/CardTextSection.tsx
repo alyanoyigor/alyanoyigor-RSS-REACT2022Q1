@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GenreData } from '../../interfaces';
-import { convertDate } from '../../utils';
+import { GenreData } from '../../types/types';
+import { convertDate } from '../../utils/utils';
 import { CardButtons } from './CardButtons';
 import { MovieGenres } from './MovieGenres';
 

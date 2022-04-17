@@ -2,13 +2,13 @@ import styled from 'styled-components';
 
 export const CloseBtn = styled.button`
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 8px;
+  right: 8px;
   background: none;
   border: none;
   padding: 0;
-  width: 3rem;
-  height: 3rem;
+  width: 40px;
+  height: 40px;
   outline: none;
   cursor: pointer;
   transition: all 0.3s;
@@ -26,10 +26,10 @@ export const CloseBtn = styled.button`
     top: 0;
     left: 50%;
     transition: transform(-50%, -50%);
-    width: 0.2rem;
-    height: 2.5rem;
+    width: 3px;
+    height: 32px;
     background-color: #ffffff;
-    border-radius: 1.5px;
+    border-radius: 1px;
   }
 
   &::before {

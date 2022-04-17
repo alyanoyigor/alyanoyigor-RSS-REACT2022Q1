@@ -3,7 +3,7 @@ import axios from 'axios';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { MOVIE_API_KEY } from '../../config';
-import { DetailedMovieData } from '../../interfaces';
+import { DetailedMovieData } from '../../types/types';
 
 import { Preloader } from '../Preloader';
 import { ModalOverlay } from './ModalOverlay';

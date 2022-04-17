@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import DefaultImg from '../assets/oops-404.jpg';
-import { MOVIE_POSTER_URL } from '../urls';
+import DefaultImg from '../assets/defaultPoster.jpg';
+import { MOVIE_POSTER_URL } from '../urls/urls';
 
 const PosterWrapper = styled.div`
   position: relative;
@@ -9,17 +9,11 @@ const PosterWrapper = styled.div`
 `;
 
 const Image = styled.img`
-  max-width: 16rem;
   width: 100%;
 
-  @media screen and (max-width: 880px) {
-    max-width: 12rem;
-  }
-
-  @media screen and (max-width: 488px) {
+  @media screen and (max-width: 490px) {
     object-fit: cover;
-    height: 20rem;
-    max-width: 100%;
+    max-height: 320px;
     object-position: top;
   }
 `;
@@ -29,8 +23,8 @@ const RatedWrapper = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
+  width: 48px;
+  height: 48px;
   background: linear-gradient(to right bottom, #134b5f, #2596be, #66b6d2);
   position: absolute;
   bottom: -5%;

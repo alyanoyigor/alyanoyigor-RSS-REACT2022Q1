@@ -12,13 +12,13 @@ const CustomNavLink = styled(NavLink)`
 `;
 
 const HeaderWrapper = styled.header`
-  padding: 1rem 0;
+  padding: 16px 0;
 `;
 
 const Nav = styled.nav`
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 32px;
 `;
 
 export const Header = () => {
