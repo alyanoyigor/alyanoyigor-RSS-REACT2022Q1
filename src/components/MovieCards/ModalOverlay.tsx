@@ -13,7 +13,7 @@ const ImageWrapper = styled.div`
     display: block;
     width: 100%;
     height: auto;
-    border-radius: 1rem;
+    border-radius: 16px;
   }
 
   @media (max-width: 768px) {
@@ -30,7 +30,7 @@ const ImageWrapper = styled.div`
 const Modal = styled.div`
   position: fixed;
   display: flex;
-  gap: 3rem;
+  gap: 48px;
   color: #fff;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -39,18 +39,18 @@ const Modal = styled.div`
   width: 80%;
   z-index: 100;
   background-size: cover;
-  padding: 2rem 1rem 1rem 1rem;
+  padding: 32px 16px 16px 16px;
   overflow: auto;
   background: linear-gradient(rgba(0, 0, 0, 0.8) 100%, rgba(0, 0, 0, 0.8) 100%),
     url(${(props: { bg: string | null }) => (props.bg ? MOVIE_POSTER_BG_URL + props.bg : null)});
   background-repeat: no-repeat;
   background-position: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  border-radius: 1rem;
+  border-radius: 16px;
 
   @media (max-width: 768px) {
     height: 80%;
-    gap: 1rem;
+    gap: 16px;
     align-content: flex-start;
     flex-wrap: wrap;
     top: 50%;
@@ -62,7 +62,7 @@ const Modal = styled.div`
 `;
 
 const Title = styled.h1`
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 8px 0;
   & span {
     font-weight: 400;
     font-size: 0.9em;
@@ -99,13 +99,13 @@ const MovieDetails = styled.div`
 const ProductionCompanies = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 8px;
   & span {
     display: flex;
     align-items: center;
-    padding: 0.25rem;
+    padding: 4px;
     background-color: #fff;
-    border-radius: 0.5rem;
+    border-radius: 8px;
   }
   & span img {
     width: 64px;
@@ -114,7 +114,7 @@ const ProductionCompanies = styled.div`
 
 const OverviewBlock = styled.div`
   & h2 {
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
   }
   & p {
     margin-top: 0;

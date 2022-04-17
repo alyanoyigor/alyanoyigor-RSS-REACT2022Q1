@@ -9,13 +9,13 @@ import styled from 'styled-components';
 import { FormCardsList } from '../components/FormComponents/FormCardsList';
 
 const Form = styled.form`
-  padding: 2rem;
+  padding: 32px;
   background-color: rgb(112, 204, 231);
-  border-radius: 1rem;
-  margin-bottom: 2rem;
+  border-radius: 16px;
+  margin-bottom: 32px;
 
   @media (max-width: 500px) {
-    padding: 0.5rem;
+    padding: 8px;
   }
 `;
 

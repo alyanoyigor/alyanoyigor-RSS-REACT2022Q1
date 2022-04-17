@@ -7,17 +7,17 @@ import { MovieGenres } from './MovieGenres';
 
 const CardTitle = styled.h3`
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 18px;
 `;
 
 const CarDate = styled.p`
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 14px;
   color: rgba(0, 0, 0, 0.8);
 `;
 
 const CardTextWrapper = styled.div`
-  padding: 1rem;
+  padding: 16px;
 `;
 
 type CardTextSectionProps = {
