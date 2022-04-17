@@ -1,7 +1,7 @@
 import React, { RefObject } from 'react';
 import { FormBlock } from './FormBlock';
-import { InputControl } from './InputControl';
-import { InputZipCode } from './InputZipCode';
+import { Input } from './Input';
+import { InputContainer } from './InputContainer';
 import { SelectCity } from './SelectCity';
 import { SelectCountry } from './SelectCountry';
 
@@ -30,31 +30,37 @@ export class FormLocation extends React.Component<FormLocationProps, { countryId
   render() {
     return (
       <FormBlock title="Location Info">
-        <InputControl
+        <InputContainer
           errorMessage={this.props.countrySelectErrorMessage}
-          testErrorId="countryError"
+          errorTestId="countryError"
           isValid={this.props.isValidCountrySelect}
           maxWidth={10}
-          labelValue="Country"
+          labelText="Country"
         >
           <SelectCountry
             onSelectCountryChange={this.changeCountry.bind(this)}
             countrySelect={this.props.countrySelect}
           />
-        </InputControl>
-        <InputControl
+        </InputContainer>
+        <InputContainer
           errorMessage={this.props.citySelectErrorMessage}
-          testErrorId="cityError"
+          errorTestId="cityError"
           isValid={this.props.isValidCitySelect}
           maxWidth={10}
-          labelValue="City"
+          labelText="City"
         >
           <SelectCity countryId={this.state.countryId} citySelect={this.props.citySelect} />
-        </InputControl>
-        <InputZipCode
+        </InputContainer>
+        <Input
           errorMessage={this.props.zipCodeInputErrorMessage}
           isValid={this.props.isValidInputZipCode}
-          refInput={this.props.zipCodeInput}
+          inputRef={this.props.zipCodeInput}
+          errorTestId="zipCodeError"
+          maxWidth={20}
+          labelText="Zip code"
+          inputTestId="zipCodeInput"
+          inputType="number"
+          inputPlaceholder="#####"
         />
       </FormBlock>
     );

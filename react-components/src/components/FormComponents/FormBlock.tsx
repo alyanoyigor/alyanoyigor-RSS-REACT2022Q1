@@ -20,23 +20,18 @@ const FormBlockTitle = styled.h3`
 
 const FormBlockContentWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   gap: 1rem;
-
-  @media (max-width: ${(props: { wrapContentWidth: number }) => props.wrapContentWidth}px) {
-    flex-wrap: wrap;
-  }
 `;
 
-type FormBlockProps = { title: string; wrapContentWidth?: number; children: React.ReactNode };
+type FormBlockProps = { title: string; children: React.ReactNode };
 
-export const FormBlock = ({ title, wrapContentWidth = 768, children }: FormBlockProps) => {
+export const FormBlock = ({ title, children }: FormBlockProps) => {
   return (
     <FormBlockWrapper>
       <FormBlockTitle>{title}</FormBlockTitle>
-      <FormBlockContentWrapper wrapContentWidth={wrapContentWidth}>
-        {children}
-      </FormBlockContentWrapper>
+      <FormBlockContentWrapper>{children}</FormBlockContentWrapper>
     </FormBlockWrapper>
   );
 };

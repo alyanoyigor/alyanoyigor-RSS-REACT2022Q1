@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 type InputControlProps = {
-  labelValue?: string;
+  labelText?: string;
   errorMessage?: string;
-  testErrorId?: string;
+  errorTestId?: string;
   children?: React.ReactNode;
 } & InputWrapperProps;
 
@@ -54,21 +54,25 @@ export const InputWrapper = styled.div`
   }
 `;
 
-export const InputControl = ({
-  labelValue,
-  maxWidth = 15,
+export const InputContainer = ({
+  labelText,
+  maxWidth,
   errorMessage,
   isValid,
-  testErrorId,
+  errorTestId,
   children,
 }: InputControlProps) => {
   return (
     <InputWrapper maxWidth={maxWidth} isValid={isValid}>
-      <label className="label">{labelValue}</label>
+      <label className="label">{labelText}</label>
       {children}
-      <span data-testid={testErrorId} className="error-message">
+      <span data-testid={errorTestId} className="error-message">
         {errorMessage}
       </span>
     </InputWrapper>
   );
+};
+
+InputContainer.defaultProps = {
+  maxWidth: 15,
 };

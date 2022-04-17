@@ -1,6 +1,6 @@
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
-import { FormCheckbox } from './FormCheckbox';
+import { Checkbox } from './Checkbox';
 
 const CheckboxWrapper = styled.div`
   display: flex;
@@ -22,14 +22,14 @@ export const FormPromotions = ({
 }: FormPromotionsProps) => {
   return (
     <CheckboxWrapper>
-      <FormCheckbox
+      <Checkbox
         checkboxPrivacy={checkboxPrivacy}
         isValid={isValidCheckboxPrivacy}
         errorMessage={checkboxPrivacyErrorMessage}
         labelValue="I agree to privacy policy"
         testId="checkboxPrivacy"
       />
-      <FormCheckbox isValid={true} labelValue="I wish to be notified of promotions" />
+      <Checkbox isValid={true} labelValue="I wish to be notified of promotions" />
     </CheckboxWrapper>
   );
 };

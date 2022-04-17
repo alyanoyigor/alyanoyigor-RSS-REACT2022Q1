@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { AppRouter } from '../../components/AppRouter';
-import { renderWithRouter } from '../../test/helper/renderWithRouter';
+import { AppRouter } from '../components/AppRouter';
+import { renderWithRouter } from '../test/helper/renderWithRouter';
 import '@testing-library/jest-dom';
-import { About } from '.';
+import { About } from './About';
 
 describe('About', () => {
   it('about location path', () => {

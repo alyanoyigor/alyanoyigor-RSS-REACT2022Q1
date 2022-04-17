@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Card } from './Card';
 import { MOVIE_API_KEY } from '../../config';
-import { GenreData, MovieData } from '../../interfaces';
+import { GenreData, MovieData } from '../../types/types';
 import { Preloader } from '../Preloader';
 
 const ListWrapper = styled.ul`

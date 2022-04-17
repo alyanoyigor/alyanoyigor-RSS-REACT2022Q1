@@ -23,9 +23,15 @@ export type GenreData = {
 };
 
 export type InputFormProps = {
+  maxWidth: number;
+  labelText: string;
+  errorTestId: string;
+  inputType: string;
   errorMessage: string;
   isValid: boolean;
-  refInput: RefObject<HTMLInputElement>;
+  inputTestId: string;
+  inputRef: RefObject<HTMLInputElement>;
+  inputPlaceholder?: string;
 };
 
 export type DeliveryCard = {

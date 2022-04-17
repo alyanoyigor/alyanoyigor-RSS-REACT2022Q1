@@ -70,7 +70,7 @@ type FormCheckboxProps = {
   checkboxPrivacy?: RefObject<HTMLInputElement>;
 };
 
-export const FormCheckbox = ({
+export const Checkbox = ({
   labelValue,
   checkboxPrivacy,
   isValid,

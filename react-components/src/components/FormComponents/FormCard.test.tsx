@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { FormCard } from './index';
+import { FormCard } from './FormCard';
 
 describe('Form Card', () => {
   beforeEach(() => {
