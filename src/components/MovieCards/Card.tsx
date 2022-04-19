@@ -35,30 +35,19 @@ export type CardProps = {
   cardId: number;
 };
 
-export class Card extends React.Component<CardProps> {
-  constructor(props: CardProps) {
-    super(props);
-  }
+export const Card = (props: CardProps) => {
+  const { className, cardId, poster_path, vote_average, popularity, title, genres, release_date } =
+    props;
 
-  render() {
-    return (
-      <CardWrapper
-        className={this.props.className}
-        data-cardid={this.props.cardId}
-        data-testid="card-item"
-      >
-        <PosterImage
-          poster_path={this.props.poster_path}
-          title={this.props.title}
-          vote_average={this.props.vote_average}
-        />
-        <CardTextSection
-          popularity={this.props.popularity}
-          title={this.props.title}
-          genres={this.props.genres}
-          release_date={this.props.release_date}
-        />
-      </CardWrapper>
-    );
-  }
-}
+  return (
+    <CardWrapper className={className} data-cardid={cardId} data-testid="card-item">
+      <PosterImage poster_path={poster_path} title={title} vote_average={vote_average} />
+      <CardTextSection
+        popularity={popularity}
+        title={title}
+        genres={genres}
+        release_date={release_date}
+      />
+    </CardWrapper>
+  );
+};

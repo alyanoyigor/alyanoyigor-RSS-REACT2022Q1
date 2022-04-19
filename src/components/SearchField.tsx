@@ -13,9 +13,8 @@ export const SearchField = ({ onSubmitMovie }: SearchFieldProps) => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchValue = event.target.value;
-    setSearchValue(searchValue);
-    saveValueToLocalStorage(searchValue);
+    const searchInputValue = event.target.value;
+    setSearchValue(searchInputValue);
   };
 
   const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -31,10 +30,14 @@ export const SearchField = ({ onSubmitMovie }: SearchFieldProps) => {
     if (savedSearchValue) {
       setSearchValue(savedSearchValue);
     }
-    return () => {
-      saveValueToLocalStorage(searchValue);
-    };
   }, []);
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', () => saveValueToLocalStorage(searchValue));
+    return () => {
+      window.removeEventListener('beforeunload', () => saveValueToLocalStorage(searchValue));
+    };
+  }, [searchValue]);
 
   return (
     <SearchInput

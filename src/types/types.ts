@@ -1,5 +1,4 @@
-import { RefObject } from 'react';
-
+import { ChangeEvent } from 'react';
 export type MovieData = {
   adult: boolean;
   backdrop_path: string;
@@ -70,15 +69,25 @@ export type GenreData = {
   name: string;
 };
 
+export type InputState = {
+  error: string;
+  isValid: boolean;
+  value?: string;
+};
+
+export type CheckboxState = {
+  isChecked: boolean;
+  error: string;
+  isValid: boolean;
+};
+
 export type InputFormProps = {
-  maxWidth: number;
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
   labelText: string;
   errorTestId: string;
   inputType: string;
-  errorMessage: string;
-  isValid: boolean;
   inputTestId: string;
-  inputRef: RefObject<HTMLInputElement>;
+  inputState: InputState;
   inputPlaceholder?: string;
 };
 
@@ -90,4 +99,20 @@ export type DeliveryCard = {
   country: string;
   city: string;
   zipCode: string;
+};
+
+export type UpdateFormState = {
+  type:
+    | 'SET_GENDER_INPUT'
+    | 'SET_FULLNAME_INPUT'
+    | 'SET_BIRTHDAY_INPUT'
+    | 'SET_FILE_INPUT'
+    | 'SET_ZIPCODE_INPUT'
+    | 'SET_COUNTRY_SELECT'
+    | 'SET_CITY_SELECT'
+    | 'SET_CHECKBOX_PRIVACY'
+    | 'SET_CHECKBOX_PROMOTION';
+  value?: string;
+  file?: File;
+  isChecked?: boolean;
 };

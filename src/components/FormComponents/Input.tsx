@@ -5,28 +5,22 @@ import { InputContainer } from './InputContainer';
 
 export const Input = (props: InputFormProps) => {
   const {
-    maxWidth,
     labelText,
     errorTestId,
-    errorMessage,
-    isValid,
-    inputRef,
     inputType,
     inputPlaceholder,
     inputTestId,
+    inputState,
+    handleInputChange,
   } = props;
+
   return (
-    <InputContainer
-      maxWidth={maxWidth}
-      labelText={labelText}
-      errorTestId={errorTestId}
-      errorMessage={errorMessage}
-      isValid={isValid}
-    >
+    <InputContainer labelText={labelText} errorTestId={errorTestId} errorMessage={inputState.error}>
       <StyledInput
+        onChange={handleInputChange}
+        value={inputState.value}
         type={inputType}
         data-testid={inputTestId}
-        ref={inputRef}
         placeholder={inputPlaceholder}
       />
     </InputContainer>

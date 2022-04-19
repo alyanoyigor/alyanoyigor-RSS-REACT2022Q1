@@ -3,14 +3,12 @@ import styled from 'styled-components';
 
 type InputControlProps = {
   labelText?: string;
-  errorMessage?: string;
   errorTestId?: string;
   children?: React.ReactNode;
 } & InputWrapperProps;
 
 type InputWrapperProps = {
-  isValid: boolean;
-  maxWidth?: number;
+  errorMessage?: string;
 };
 
 export const InputWrapper = styled.div`
@@ -20,12 +18,12 @@ export const InputWrapper = styled.div`
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  max-width: ${(props: InputWrapperProps) => props.maxWidth}rem;
+  max-width: 250px;
 
   & input,
   & select {
     color: #fff;
-    border-color: ${(props: InputWrapperProps) => props.isValid === false && '#ff8585'};
+    border-color: ${(props: InputWrapperProps) => props.errorMessage && '#ff8585'};
   }
 
   & option {
@@ -56,14 +54,12 @@ export const InputWrapper = styled.div`
 
 export const InputContainer = ({
   labelText,
-  maxWidth,
   errorMessage,
-  isValid,
   errorTestId,
   children,
 }: InputControlProps) => {
   return (
-    <InputWrapper maxWidth={maxWidth} isValid={isValid}>
+    <InputWrapper errorMessage={errorMessage}>
       <label className="label">{labelText}</label>
       {children}
       <span data-testid={errorTestId} className="error-message">

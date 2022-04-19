@@ -1,6 +1,6 @@
 import React from 'react';
 import App from './App';
-import { fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from './test/helper/renderWithRouter';
@@ -62,20 +62,20 @@ class LocalStorageMock {
 }
 
 describe('Local Storage', () => {
+  let localStorageMock: LocalStorageMock;
   beforeEach(() => {
-    Object.defineProperty(window, 'localStorage', { value: new LocalStorageMock() });
+    localStorageMock = new LocalStorageMock();
   });
 
   it('Save to localStorage value from input before switching between pages', () => {
     renderWithRouter(<App />);
     const input: HTMLInputElement = screen.getByRole('search');
-    const homeLink = screen.getByTestId('home-link');
-    const aboutLink = screen.getByTestId('about-link');
-
     fireEvent.change(input, { target: { value: 'Test' } });
-    userEvent.click(aboutLink);
+    const homeLink = screen.getByTestId('home-link');
     userEvent.click(homeLink);
+    const aboutLink = screen.getByTestId('about-link');
+    userEvent.click(aboutLink);
 
-    expect(localStorage.getItem('searchValue')).toBe('Test');
+    expect(localStorageMock.getItem('searchValue')).toBe('Test');
   });
 });

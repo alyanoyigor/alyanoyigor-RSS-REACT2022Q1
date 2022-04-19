@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { MOVIE_API_KEY } from '../../config';
 import { DetailedMovieData } from '../../types/types';
-
 import { Preloader } from '../Preloader';
 import { ModalOverlay } from './ModalOverlay';
 
@@ -27,49 +26,43 @@ type ModalCardProps = {
   onConfirm: () => void;
 };
 
-export class ModalCard extends React.Component<
-  ModalCardProps,
-  { movieData: DetailedMovieData | null; isFetching: boolean }
-> {
-  backdropRoot: Element | null;
-  modalOverlayRoot: Element | null;
-  constructor(props: ModalCardProps) {
-    super(props);
-    this.backdropRoot = document.getElementById('backdrop-root');
-    this.modalOverlayRoot = document.getElementById('modal-overlay-root');
-    this.state = { movieData: null, isFetching: false };
-  }
-  componentDidMount() {
-    this.setState({ isFetching: true });
-    this.getDetailMovieData().then((movieData) => this.setState({ movieData, isFetching: false }));
-  }
+export const ModalCard = ({ cardId, onConfirm }: ModalCardProps) => {
+  const [movieData, setMovieData] = useState<DetailedMovieData | null>(null);
+  const [isFetching, setIsFetching] = useState(false);
 
-  async getDetailMovieData() {
+  const getDetailMovieData = async () => {
     try {
       const movies = await axios.get(
-        `https://api.themoviedb.org/3/movie/${this.props.cardId}?api_key=${MOVIE_API_KEY}`
+        `https://api.themoviedb.org/3/movie/${cardId}?api_key=${MOVIE_API_KEY}`
       );
       return movies.data;
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
-  render() {
-    if (this.state.isFetching || !this.state.movieData) {
-      return <Preloader />;
-    }
+  useEffect(() => {
+    setIsFetching(true);
+    getDetailMovieData().then((movieData) => {
+      setMovieData(movieData);
+      setIsFetching(false);
+    });
+  }, []);
 
-    return (
-      <React.Fragment>
-        {this.backdropRoot &&
-          ReactDOM.createPortal(<Backdrop onConfirm={this.props.onConfirm} />, this.backdropRoot)}
-        {this.modalOverlayRoot &&
-          ReactDOM.createPortal(
-            <ModalOverlay movieData={this.state.movieData} onConfirm={this.props.onConfirm} />,
-            this.modalOverlayRoot
-          )}
-      </React.Fragment>
-    );
+  if (isFetching || !movieData) {
+    return <Preloader />;
   }
-}
+  const modalOverlay = document.getElementById('modal-overlay-root');
+  const backdrop = document.getElementById('backdrop-root');
+
+  return (
+    <React.Fragment>
+      {backdrop && ReactDOM.createPortal(<Backdrop onConfirm={onConfirm} />, backdrop)}
+      {modalOverlay &&
+        ReactDOM.createPortal(
+          <ModalOverlay movieData={movieData} onConfirm={onConfirm} />,
+          modalOverlay
+        )}
+    </React.Fragment>
+  );
+};

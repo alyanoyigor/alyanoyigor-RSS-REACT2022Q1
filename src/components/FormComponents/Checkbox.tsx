@@ -1,5 +1,6 @@
-import React, { RefObject } from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
+import { CheckboxState } from '../../types/types';
 
 const CheckboxInput = styled.input`
   position: absolute;
@@ -63,25 +64,28 @@ const CheckboxLabel = styled.label`
 
 type FormCheckboxProps = {
   labelValue: string;
-  isValid: boolean;
-  errorMessage?: string;
+  checkboxState: CheckboxState;
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   testId?: string;
-  checkboxPrivacy?: RefObject<HTMLInputElement>;
 };
 
 export const Checkbox = ({
   labelValue,
-  checkboxPrivacy,
-  isValid,
-  errorMessage,
   testId,
+  checkboxState,
+  handleChange,
 }: FormCheckboxProps) => {
   return (
     <CheckboxLabel>
       {labelValue}
-      <CheckboxInput type="checkbox" data-testid={testId} ref={checkboxPrivacy} />
-      <Checkmark className="checkmark" isValid={isValid} />
-      <span className="error-message">{errorMessage}</span>
+      <CheckboxInput
+        type="checkbox"
+        data-testid={testId}
+        checked={checkboxState.isChecked}
+        onChange={handleChange}
+      />
+      <Checkmark className="checkmark" isValid={checkboxState.isValid} />
+      <span className="error-message">{checkboxState.error}</span>
     </CheckboxLabel>
   );
 };

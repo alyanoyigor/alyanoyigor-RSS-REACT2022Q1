@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Card } from './Card';
 import { GenreData, MovieData } from '../../types/types';
@@ -20,58 +20,45 @@ type CardsListProps = {
   isFetching: boolean;
 };
 
-export class CardsList extends React.Component<
-  CardsListProps,
-  { isOpenCardModal: boolean; cardId: string }
-> {
-  constructor(props: CardsListProps) {
-    super(props);
-    this.state = { isOpenCardModal: false, cardId: '' };
-    this.handleOpenModalCard = this.handleOpenModalCard.bind(this);
-  }
+export const CardsList = ({ moviesData, genresData, isFetching }: CardsListProps) => {
+  const [isOpenCardModal, setIsOpenCardModal] = useState(false);
+  const [cardId, setCardId] = useState('');
 
-  filterGenresFromMovie(movieGenreIds: number[]) {
-    return this.props.genresData.filter((genre) => movieGenreIds.find((id) => id === genre.id));
-  }
-
-  handleOpenModalCard(e: React.MouseEvent<HTMLUListElement>) {
+  const handleOpenModalCard = (e: React.MouseEvent<HTMLUListElement>) => {
     if (e.target instanceof HTMLElement) {
       const movieCard: HTMLElement | null = e.target.closest('.movie-card');
       if (movieCard && movieCard.dataset.cardid) {
-        this.setState({ isOpenCardModal: true, cardId: movieCard.dataset.cardid });
+        setIsOpenCardModal(true);
+        setCardId(movieCard.dataset.cardid);
       }
     }
+  };
+
+  const filterGenresFromMovie = (movieGenreIds: number[]) => {
+    return genresData.filter((genre) => movieGenreIds.find((id) => id === genre.id));
+  };
+
+  if (isFetching) {
+    return <Preloader />;
   }
-
-  render() {
-    if (this.props.isFetching) {
-      return <Preloader />;
-    }
-
-    return (
-      <>
-        {this.state.isOpenCardModal && (
-          <ModalCard
-            cardId={this.state.cardId}
-            onConfirm={() => this.setState({ isOpenCardModal: false })}
-          />
+  return (
+    <>
+      {isOpenCardModal && <ModalCard cardId={cardId} onConfirm={() => setIsOpenCardModal(false)} />}
+      <ListWrapper data-testid="card-list" onClick={handleOpenModalCard}>
+        {!moviesData.length ? (
+          <h2>Nothing was found</h2>
+        ) : (
+          moviesData.map((movie: MovieData) => (
+            <Card
+              className="movie-card"
+              cardId={movie.id}
+              key={movie.id}
+              genres={filterGenresFromMovie(movie.genre_ids)}
+              {...movie}
+            />
+          ))
         )}
-        <ListWrapper data-testid="card-list" onClick={this.handleOpenModalCard}>
-          {!this.props.moviesData.length ? (
-            <h2>Nothing was found</h2>
-          ) : (
-            this.props.moviesData.map((movie: MovieData) => (
-              <Card
-                className="movie-card"
-                cardId={movie.id}
-                key={movie.id}
-                genres={this.filterGenresFromMovie(movie.genre_ids)}
-                {...movie}
-              />
-            ))
-          )}
-        </ListWrapper>
-      </>
-    );
-  }
-}
+      </ListWrapper>
+    </>
+  );
+};

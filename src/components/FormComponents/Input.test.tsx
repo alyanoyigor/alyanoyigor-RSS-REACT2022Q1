@@ -22,7 +22,7 @@ describe('Input Date', () => {
     fireEvent.change(input, { target: { value: '2020-05-12' } });
     userEvent.click(submitBtn);
     const errorMessage = await screen.findByTestId('dateError');
-    expect(errorMessage.textContent).toBe('Sorry, but you must be over 18 years old');
+    expect(errorMessage.textContent).toBe('Sorry, but you must be older 18 or younger 70');
   });
 });
 
@@ -89,7 +89,7 @@ describe('Input Full Name', () => {
     userEvent.type(input, '123');
     userEvent.click(submitBtn);
     const errorMessage = await screen.findByTestId('fullNameError');
-    expect(errorMessage.textContent).toBe('Full name must contain only alphabet English letters');
+    expect(errorMessage.textContent).toBe('Please paste only letters');
   });
 });
 
