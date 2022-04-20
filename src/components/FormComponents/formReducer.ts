@@ -129,6 +129,12 @@ export const formReducer = (
         birthdayInput: { ...errorState, value: action.value },
       };
     case 'SET_FILE_INPUT':
+      if (!action.file) {
+        return {
+          ...state,
+          fileInput: { ...errorState, file: action.file },
+        };
+      }
       errorState.isValid = validateFileInput({ value: action.file, errorState }).isValid;
       return {
         ...state,
@@ -225,6 +231,12 @@ export const formReducer = (
 
     case 'VALIDATE_FILE_INPUT':
       const fileInputState = state.fileInput.file;
+      if (!fileInputState) {
+        return {
+          ...state,
+          fileInput: { ...errorState, file: fileInputState },
+        };
+      }
       errorState = validateFileInput({ value: fileInputState, errorState });
       return {
         ...state,
