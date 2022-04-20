@@ -84,7 +84,7 @@ export const Checkbox = ({
         checked={checkboxState.isChecked}
         onChange={handleChange}
       />
-      <Checkmark className="checkmark" isValid={checkboxState.isValid} />
+      <Checkmark className="checkmark" isValid={!Boolean(checkboxState.error)} />
       <span className="error-message">{checkboxState.error}</span>
     </CheckboxLabel>
   );

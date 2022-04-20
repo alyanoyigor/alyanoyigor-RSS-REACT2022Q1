@@ -69,6 +69,8 @@ export const Home = () => {
     const savedSearchValue = localStorage.getItem('searchValue');
     createMoviesData(savedSearchValue);
     getMovieGenres().then((genresData) => setGenresData(genresData));
+
+    return () => {};
   }, []);
 
   return (

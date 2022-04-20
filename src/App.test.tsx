@@ -1,9 +1,10 @@
 import React from 'react';
 import App from './App';
-import { act, fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from './test/helper/renderWithRouter';
+import { act } from 'react-dom/test-utils';
 
 describe('App', () => {
   it('Start app with correct elements', async () => {
@@ -14,21 +15,23 @@ describe('App', () => {
     expect((await screen.findAllByTestId('card-item'))[0]).toBeInTheDocument();
   });
 
-  it('Save input value after switching between pages', () => {
-    renderWithRouter(<App />);
+  it('Save input value after switching between pages', async () => {
+    await act(async () => {
+      renderWithRouter(<App />);
+    });
     const input: HTMLInputElement = screen.getByRole('search');
     const homeLink = screen.getByTestId('home-link');
     const aboutLink = screen.getByTestId('about-link');
-
     fireEvent.change(input, { target: { value: 'Test' } });
     userEvent.click(aboutLink);
     userEvent.click(homeLink);
-
     expect(input).toContainHTML('Test');
   });
 
-  it('Switch between pages', () => {
-    renderWithRouter(<App />);
+  it('Switch between pages', async () => {
+    await act(async () => {
+      renderWithRouter(<App />);
+    });
     const homeLink = screen.getByTestId('home-link');
     const aboutLink = screen.getByTestId('about-link');
     userEvent.click(aboutLink);
@@ -62,12 +65,11 @@ class LocalStorageMock {
 }
 
 describe('Local Storage', () => {
-  let localStorageMock: LocalStorageMock;
   beforeEach(() => {
-    localStorageMock = new LocalStorageMock();
+    Object.defineProperty(window, 'localStorage', { value: new LocalStorageMock() });
   });
 
-  it('Save to localStorage value from input before switching between pages', () => {
+  it('Save to localStorage value from input before switching between pages', async () => {
     renderWithRouter(<App />);
     const input: HTMLInputElement = screen.getByRole('search');
     fireEvent.change(input, { target: { value: 'Test' } });
@@ -76,6 +78,6 @@ describe('Local Storage', () => {
     const aboutLink = screen.getByTestId('about-link');
     userEvent.click(aboutLink);
 
-    expect(localStorageMock.getItem('searchValue')).toBe('Test');
+    expect(localStorage.getItem('searchValue')).toBe('Test');
   });
 });

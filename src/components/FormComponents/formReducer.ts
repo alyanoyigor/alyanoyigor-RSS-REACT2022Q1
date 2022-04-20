@@ -52,10 +52,10 @@ export const FORM_INITIAL_STATE = {
   zipCodeInput: { value: '', error: '', isValid: false },
   selectCountry: { value: '', error: '', isValid: false },
   selectCity: { value: '', error: '', isValid: false },
-  fileInput: { file: null, error: '', isValid: false },
+  fileInput: { file: null, error: '', isValid: true },
   checkboxPrivacy: { isChecked: false, error: '', isValid: false },
-  checkboxPromotion: { isChecked: false, error: '', isValid: false },
-  genderInput: { value: 'male', error: '', isValid: false },
+  checkboxPromotion: { isChecked: false, error: '', isValid: true },
+  genderInput: { value: 'male', error: '', isValid: true },
 };
 
 export const formReducer = (

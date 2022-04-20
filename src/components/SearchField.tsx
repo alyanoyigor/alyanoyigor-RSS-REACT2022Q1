@@ -13,8 +13,8 @@ export const SearchField = ({ onSubmitMovie }: SearchFieldProps) => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchInputValue = event.target.value;
-    setSearchValue(searchInputValue);
+    setSearchValue(event.target.value);
+    saveValueToLocalStorage(event.target.value);
   };
 
   const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { AppRouter } from '../components/AppRouter';
 import { renderWithRouter } from '../test/helper/renderWithRouter';
 import '@testing-library/jest-dom';
@@ -97,24 +97,18 @@ describe('Home', () => {
     jest.clearAllMocks();
   });
   it('home location path', () => {
-    act(() => {
-      renderWithRouter(<AppRouter />);
-    });
+    renderWithRouter(<AppRouter />);
     expect(screen.getByTestId('home-title')).toBeInTheDocument();
     expect(screen.getByRole('search')).toBeInTheDocument();
   });
 
   it('Render Home page', () => {
-    act(() => {
-      render(<Home />);
-    });
+    render(<Home />);
     expect(screen.getByTestId('home-title')).toBeInTheDocument();
   });
 
   it('search movie', async () => {
-    act(() => {
-      render(<Home />);
-    });
+    render(<Home />);
     const cardItems = await screen.findAllByTestId('card-item');
     expect(cardItems.length).toBe(3);
 
@@ -147,12 +141,8 @@ describe('Home', () => {
       })
     );
 
-    act(() => {
-      fireEvent.change(search, { target: { value: 'Spider-Man: No Way Home' } });
-    });
-    act(() => {
-      fireEvent.keyDown(search, { code: 'Enter', key: 'Enter' });
-    });
+    fireEvent.change(search, { target: { value: 'Spider-Man: No Way Home' } });
+    fireEvent.keyDown(search, { code: 'Enter', key: 'Enter' });
 
     const updatedCardItems = await screen.findAllByTestId('card-item');
     expect(updatedCardItems.length).toBe(1);
