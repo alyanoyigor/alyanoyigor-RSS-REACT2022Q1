@@ -58,6 +58,56 @@ export const FORM_INITIAL_STATE = {
   genderInput: { value: 'male', error: '', isValid: true },
 };
 
+type ValidateFunctionArguments<T> = {
+  value: T;
+  errorState: { isValid: boolean; error: string };
+};
+
+const validateFullNameInput = ({ value, errorState }: ValidateFunctionArguments<string>) => {
+  if (value.length < 3 || value.length > 20) {
+    errorState = { isValid: false, error: 'This field must be from 3 to 20 letters' };
+  }
+  if (!/^[A-Za-z&А-Яа-я ]*$/.test(value)) {
+    errorState = { isValid: false, error: 'Please paste only letters' };
+  }
+  return errorState;
+};
+
+const validateBirthdayInput = ({ value, errorState }: ValidateFunctionArguments<string>) => {
+  if (!value) {
+    errorState = { isValid: false, error: 'This field is required' };
+  }
+  const ageDifMs = Date.now() - new Date(value).getTime();
+  const ageDate = new Date(ageDifMs);
+  const calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+  if (calculatedAge < 18) {
+    errorState = { isValid: false, error: 'Sorry, but you must be older 18 or younger 70' };
+  }
+  if (calculatedAge > 70) {
+    errorState = { isValid: false, error: 'Sorry, but you must be younger 70' };
+  }
+  return errorState;
+};
+
+const validateZipCodeInput = ({ value, errorState }: ValidateFunctionArguments<string>) => {
+  const isValidLength = /\b\d{5}\b/g.test(value);
+  if (!isValidLength) {
+    errorState = { isValid: false, error: 'Number must be 5 digits' };
+  }
+  if (value[0] === '-') {
+    errorState = { isValid: false, error: "Number can't be negative" };
+  }
+  return errorState;
+};
+
+const validateFileInput = ({ value, errorState }: ValidateFunctionArguments<Blob | null>) => {
+  const acceptExts = ['image/png', 'image/jpeg', 'image/gif', 'image/jpg'];
+  if (!acceptExts.some((ext) => value && ext === value.type)) {
+    errorState = { isValid: false, error: 'Image must be in png, jpeg or gif format' };
+  }
+  return errorState;
+};
+
 export const formReducer = (
   state: FormReducerState,
   action: FormReducerAction
@@ -65,12 +115,7 @@ export const formReducer = (
   let errorState = { isValid: true, error: '' };
   switch (action.type) {
     case 'SET_FULLNAME_INPUT':
-      if (action.value.length < 3 || action.value.length > 20) {
-        errorState.isValid = false;
-      }
-      if (!/^[A-Za-z&А-Яа-я ]*$/.test(action.value)) {
-        errorState.isValid = false;
-      }
+      errorState.isValid = validateFullNameInput({ value: action.value, errorState }).isValid;
       return {
         ...state,
         fullNameInput: { ...errorState, value: action.value },
@@ -78,44 +123,19 @@ export const formReducer = (
     case 'SET_GENDER_INPUT':
       return { ...state, genderInput: { ...errorState, value: action.value } };
     case 'SET_BIRTHDAY_INPUT':
-      if (!action.value) {
-        errorState = { isValid: false, error: 'This field is required' };
-      }
-      const ageDifms = Date.now() - new Date(action.value).getTime();
-      const age = new Date(ageDifms);
-      const calculateAge = Math.abs(age.getUTCFullYear() - 1970);
-      if (calculateAge < 18) {
-        errorState.isValid = false;
-      }
-      if (calculateAge > 70) {
-        errorState.isValid = false;
-      }
+      errorState.isValid = validateBirthdayInput({ value: action.value, errorState }).isValid;
       return {
         ...state,
         birthdayInput: { ...errorState, value: action.value },
       };
     case 'SET_FILE_INPUT':
-      const acceptExtensions = ['image/png', 'image/jpeg', 'image/gif', 'image/jpg'];
-      if (!action.file) {
-        return {
-          ...state,
-          fileInput: { ...errorState, file: action.file },
-        };
-      }
-      if (!acceptExtensions.some((ext) => action.file && ext === action.file.type)) {
-        errorState = { isValid: false, error: 'Image must be in png, jpeg or gif format' };
-      }
+      errorState.isValid = validateFileInput({ value: action.file, errorState }).isValid;
       return {
         ...state,
         fileInput: { ...errorState, file: action.file },
       };
     case 'SET_ZIPCODE_INPUT':
-      if (!/\b\d{5}\b/g.test(action.value)) {
-        errorState.isValid = false;
-      }
-      if (action.value[0] === '-') {
-        errorState.isValid = false;
-      }
+      errorState.isValid = validateZipCodeInput({ value: action.value, errorState }).isValid;
       return {
         ...state,
         zipCodeInput: { ...errorState, value: action.value },
@@ -182,30 +202,14 @@ export const formReducer = (
 
     case 'VALIDATE_FULLNAME_INPUT':
       const fullNameInputValue = state.fullNameInput.value;
-      if (fullNameInputValue.length < 3 || fullNameInputValue.length > 20) {
-        errorState = { isValid: false, error: 'This field must be from 3 to 20 letters' };
-      }
-      if (!/^[A-Za-z&А-Яа-я ]*$/.test(fullNameInputValue)) {
-        errorState = { isValid: false, error: 'Please paste only letters' };
-      }
+      errorState = validateFullNameInput({ value: fullNameInputValue, errorState });
       return {
         ...state,
         fullNameInput: { ...errorState, value: fullNameInputValue },
       };
     case 'VALIDATE_BIRTHDAY_INPUT':
       const birthdayInputValue = state.birthdayInput.value;
-      if (!birthdayInputValue) {
-        errorState = { isValid: false, error: 'This field is required' };
-      }
-      const ageDifMs = Date.now() - new Date(birthdayInputValue).getTime();
-      const ageDate = new Date(ageDifMs);
-      const calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
-      if (calculatedAge < 18) {
-        errorState = { isValid: false, error: 'Sorry, but you must be older 18 or younger 70' };
-      }
-      if (calculatedAge > 70) {
-        errorState = { isValid: false, error: 'Sorry, but you must be younger 70' };
-      }
+      errorState = validateBirthdayInput({ value: birthdayInputValue, errorState });
       return {
         ...state,
         birthdayInput: { ...errorState, value: birthdayInputValue },
@@ -213,13 +217,7 @@ export const formReducer = (
 
     case 'VALIDATE_ZIPCODE_INPUT':
       const zipCodeInputValue = state.zipCodeInput.value;
-      const isValidLength = /\b\d{5}\b/g.test(zipCodeInputValue);
-      if (!isValidLength) {
-        errorState = { isValid: false, error: 'Number must be 5 digits' };
-      }
-      if (zipCodeInputValue[0] === '-') {
-        errorState = { isValid: false, error: "Number can't be negative" };
-      }
+      errorState = validateZipCodeInput({ value: zipCodeInputValue, errorState });
       return {
         ...state,
         zipCodeInput: { ...errorState, value: zipCodeInputValue },
@@ -227,16 +225,7 @@ export const formReducer = (
 
     case 'VALIDATE_FILE_INPUT':
       const fileInputState = state.fileInput.file;
-      const acceptExts = ['image/png', 'image/jpeg', 'image/gif', 'image/jpg'];
-      if (!fileInputState) {
-        return {
-          ...state,
-          fileInput: { ...errorState, file: fileInputState },
-        };
-      }
-      if (!acceptExts.some((ext) => fileInputState && ext === fileInputState.type)) {
-        errorState = { isValid: false, error: 'Image must be in png, jpeg or gif format' };
-      }
+      errorState = validateFileInput({ value: fileInputState, errorState });
       return {
         ...state,
         fileInput: { ...errorState, file: fileInputState },
