@@ -68,7 +68,3 @@ export const InputContainer = ({
     </InputWrapper>
   );
 };
-
-InputContainer.defaultProps = {
-  maxWidth: 15,
-};
