@@ -1,36 +1,41 @@
 import React, { ChangeEvent } from 'react';
 import { COUNTRIES_DATA } from '../../data/countriesData';
-import { UpdateFormState } from '../../types/types';
-import { StyledSelect } from '../StyledInput';
+import { BasicInputProps } from '../../types/types';
+import { ErrorMessage } from './ErrorMessage';
+import { InputTitle } from './InputTitle';
+import { StyledSelect } from './StyledSelect';
 
-type SelectCountryProps = {
+type SelectCountryProps = BasicInputProps & {
   onSelectCountryChange: (value: number) => void;
-  countrySelectValue: string | undefined;
-  handleSelectChange: (state: UpdateFormState) => void;
 };
 
 export const SelectCountry = ({
+  register,
+  errors,
+  inputName,
   onSelectCountryChange,
-  countrySelectValue,
-  handleSelectChange,
 }: SelectCountryProps) => {
   const handleCountrySelect = (e: ChangeEvent<HTMLSelectElement>) => {
     onSelectCountryChange(COUNTRIES_DATA.findIndex((item) => item === e.target.value));
-    handleSelectChange({ type: 'SET_COUNTRY_SELECT', value: e.target.value });
   };
   return (
-    <StyledSelect
-      value={countrySelectValue}
-      data-testid="selectCountry"
-      name="Country"
-      onChange={handleCountrySelect}
-    >
-      <option value="">Select Country</option>
-      {COUNTRIES_DATA.map((country) => (
-        <option key={country} value={country}>
-          {country}
-        </option>
-      ))}
-    </StyledSelect>
+    <div>
+      <InputTitle>Country</InputTitle>
+      <StyledSelect
+        data-testid="selectCountry"
+        isInvalid={Boolean(errors[inputName])}
+        {...register(inputName, {
+          onChange: handleCountrySelect,
+        })}
+      >
+        <option value="">Select Country</option>
+        {COUNTRIES_DATA.map((country) => (
+          <option key={country} value={country}>
+            {country}
+          </option>
+        ))}
+      </StyledSelect>
+      <ErrorMessage dataTestId="countryError" error={errors[inputName]} />
+    </div>
   );
 };

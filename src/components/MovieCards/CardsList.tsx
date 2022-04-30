@@ -1,18 +1,9 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { Card } from './Card';
 import { GenreData, MovieData } from '../../types/types';
 import { Preloader } from '../Preloader';
 import { ModalCard } from './ModalCard';
-
-const ListWrapper = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 24px;
-  margin: 0;
-  padding: 0;
-`;
+import { ListWrapper } from './ListWrapper';
 
 type CardsListProps = {
   moviesData: MovieData[];

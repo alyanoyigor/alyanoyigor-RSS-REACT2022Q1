@@ -1,32 +1,35 @@
 import React from 'react';
 import { CITIES_DATA } from '../../data/citiesData';
-import { UpdateFormState } from '../../types/types';
-import { StyledSelect } from '../StyledInput';
+import { BasicInputProps } from '../../types/types';
+import { ErrorMessage } from './ErrorMessage';
+import { InputTitle } from './InputTitle';
+import { StyledSelect } from './StyledSelect';
 
-type SelectCityProps = {
+type SelectCityProps = BasicInputProps & {
   countryId: number | null;
-  citySelectValue: string | undefined;
-  handleSelectChange: (state: UpdateFormState) => void;
 };
 
-export const SelectCity = ({ countryId, citySelectValue, handleSelectChange }: SelectCityProps) => {
+export const SelectCity = ({ register, errors, inputName, countryId }: SelectCityProps) => {
   let cities = null;
   if (countryId !== null && countryId !== -1) {
     cities = CITIES_DATA[countryId].split('|');
   }
   return (
-    <StyledSelect
-      value={citySelectValue}
-      onChange={(e) => handleSelectChange({ type: 'SET_CITY_SELECT', value: e.target.value })}
-      data-testid="selectCity"
-      name="City"
-    >
-      <option value="">Select City</option>
-      {cities?.map((city) => (
-        <option key={city} value={city}>
-          {city}
-        </option>
-      ))}
-    </StyledSelect>
+    <div>
+      <InputTitle>City</InputTitle>
+      <StyledSelect
+        isInvalid={Boolean(errors[inputName])}
+        data-testid="selectCity"
+        {...register(inputName)}
+      >
+        <option value="">Select City</option>
+        {cities?.map((city) => (
+          <option key={city} value={city}>
+            {city}
+          </option>
+        ))}
+      </StyledSelect>
+      <ErrorMessage dataTestId="cityError" error={errors[inputName]} />
+    </div>
   );
 };

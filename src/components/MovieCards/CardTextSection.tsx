@@ -10,7 +10,7 @@ const CardTitle = styled.h3`
   font-size: 18px;
 `;
 
-const CarDate = styled.p`
+const CardDate = styled.p`
   margin: 0;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.8);
@@ -42,7 +42,7 @@ export const CardTextSection = ({
   return (
     <CardTextWrapper>
       <CardTitle data-testid="card-title">{title}</CardTitle>
-      <CarDate data-testid="card-date">{date}</CarDate>
+      <CardDate data-testid="card-date">{date}</CardDate>
       <MovieGenres genres={genres} />
       <CardButtons popularity={popularity} />
     </CardTextWrapper>

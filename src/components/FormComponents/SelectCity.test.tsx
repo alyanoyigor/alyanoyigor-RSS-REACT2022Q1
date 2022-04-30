@@ -1,13 +1,13 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Delivery } from '../../pages/Delivery';
+import { CreateMovie } from '../../pages/CreateMovie';
 
 describe('Select city', () => {
   let submitBtn: HTMLButtonElement;
   beforeEach(() => {
-    render(<Delivery />);
-    submitBtn = screen.getByText(/Submit/i);
+    render(<CreateMovie />);
+    submitBtn = screen.getByTestId('submit');
   });
   it('Try to select some city when country is unselected', async () => {
     const select: HTMLSelectElement = screen.getByTestId('selectCity');

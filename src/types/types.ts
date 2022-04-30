@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 export type MovieData = {
   adult: boolean;
   backdrop_path: string;
@@ -101,18 +102,55 @@ export type DeliveryCard = {
   zipCode: string;
 };
 
-export type UpdateFormState = {
-  type:
-    | 'SET_GENDER_INPUT'
-    | 'SET_FULLNAME_INPUT'
-    | 'SET_BIRTHDAY_INPUT'
-    | 'SET_FILE_INPUT'
-    | 'SET_ZIPCODE_INPUT'
-    | 'SET_COUNTRY_SELECT'
-    | 'SET_CITY_SELECT'
-    | 'SET_CHECKBOX_PRIVACY'
-    | 'SET_CHECKBOX_PROMOTION';
-  value?: string;
-  file?: File;
-  isChecked?: boolean;
+export type CreateMovieInputs = {
+  title: string;
+  poster: FileList;
+  releaseDate: string;
+  audience: string;
+  budget: number;
+  country: string;
+  city: string;
+  privacyCheckbox: boolean;
 };
+
+export type FormCardData = {
+  title: string;
+  poster: FileList;
+  releaseDate: string;
+  audience: string;
+  budget: number;
+  country: string;
+  city: string;
+  privacyCheckbox: boolean;
+};
+
+export type InputsError = {
+  title?: FieldError;
+  poster?: FieldError;
+  releaseDate?: FieldError;
+  audience?: FieldError;
+  budget?: FieldError;
+  country?: FieldError;
+  city?: FieldError;
+  privacyCheckbox?: FieldError;
+};
+
+export type BasicInputProps = {
+  register: UseFormRegister<CreateMovieInputs>;
+  errors: InputsError;
+  inputName: keyof InputsError;
+};
+
+export type State = {
+  formCards: FormCardData[];
+  searchValue: string;
+};
+
+export type AppContextData = {
+  appState: State;
+  dispatchAppState: (value: Action) => void;
+};
+
+export type Action =
+  | { type: 'ADD_FORM_CARD'; payload: FormCardData }
+  | { type: 'ADD_SEARCH_VALUE'; payload: string };

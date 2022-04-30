@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import AppContext from '../store/context';
 import { SearchInput } from './StyledInput';
 
 type SearchFieldProps = {
@@ -6,14 +7,19 @@ type SearchFieldProps = {
 };
 
 export const SearchField = ({ onSubmitMovie }: SearchFieldProps) => {
+  const ctx = useContext(AppContext);
   const [searchValue, setSearchValue] = useState('');
 
   const saveValueToLocalStorage = (value: string) => {
     localStorage.setItem('searchValue', value);
   };
 
+  const updateSearchValue = (value: string) =>
+    ctx.dispatchAppState({ type: 'ADD_SEARCH_VALUE', payload: value });
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
+    updateSearchValue(event.target.value);
     saveValueToLocalStorage(event.target.value);
   };
 
@@ -26,18 +32,24 @@ export const SearchField = ({ onSubmitMovie }: SearchFieldProps) => {
   };
 
   useEffect(() => {
-    const savedSearchValue = localStorage.getItem('searchValue');
-    if (savedSearchValue) {
-      setSearchValue(savedSearchValue);
-    }
+    window.addEventListener('load', () => {
+      const savedSearchValue = localStorage.getItem('searchValue');
+      if (savedSearchValue) {
+        updateSearchValue(savedSearchValue);
+      }
+    });
   }, []);
 
   useEffect(() => {
-    window.addEventListener('beforeunload', () => saveValueToLocalStorage(searchValue));
+    window.addEventListener('beforeunload', () =>
+      saveValueToLocalStorage(ctx.appState.searchValue)
+    );
     return () => {
-      window.removeEventListener('beforeunload', () => saveValueToLocalStorage(searchValue));
+      window.removeEventListener('beforeunload', () =>
+        saveValueToLocalStorage(ctx.appState.searchValue)
+      );
     };
-  }, [searchValue]);
+  }, [ctx.appState.searchValue]);
 
   return (
     <SearchInput

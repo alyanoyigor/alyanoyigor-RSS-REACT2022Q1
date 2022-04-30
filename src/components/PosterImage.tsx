@@ -38,21 +38,21 @@ const RatedText = styled.span`
 `;
 
 type Poster = {
-  poster_path: string | null;
-  vote_average: number;
+  posterPath: string | null;
+  voteAverage: number;
   title: string;
 };
 
-export const PosterImage = ({ poster_path, vote_average, title }: Poster) => {
+export const PosterImage = ({ posterPath, voteAverage, title }: Poster) => {
   let imgSrc = DefaultImg;
-  if (poster_path) {
-    imgSrc = MOVIE_POSTER_URL + poster_path;
+  if (posterPath) {
+    imgSrc = MOVIE_POSTER_URL + posterPath;
   }
   return (
     <PosterWrapper>
       <Image data-testid="card-img" src={imgSrc} alt={title} />
       <RatedWrapper>
-        <RatedText data-testid="card-rated-text">{vote_average}</RatedText>
+        <RatedText data-testid="card-rated-text">{voteAverage}</RatedText>
       </RatedWrapper>
     </PosterWrapper>
   );

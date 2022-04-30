@@ -1,103 +1,154 @@
-import { ChangeEvent, useReducer, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { DeliveryCard, UpdateFormState } from '../../types/types';
-import { formReducer, FORM_INITIAL_STATE } from './formReducer';
-import { LocationInputs } from './LocationInputs';
-import { PersonalInfoInputs } from './PersonalInfoInputs';
-import { PromotionCheckboxes } from './PromotionCheckboxes';
-import DefaultUserImgURL from '../../assets/defaultUserImg.png';
-import { SubmitBtn } from './SubmitBtn';
+import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { AppContextData, CreateMovieInputs } from '../../types/types';
+import { Input } from './Input';
+import { SelectCountry } from './SelectCountry';
+import { SelectCity } from './SelectCity';
+import { styledField } from './styledField';
 
-const FormWrapper = styled.form`
-  padding: 32px;
-  background-color: rgb(112, 204, 231);
-  border-radius: 16px;
-  margin-bottom: 32px;
+const requiredText = 'This field is required';
+const transformField = (curr: string, orig: string) => (orig === '' ? null : curr);
 
-  @media (max-width: 500px) {
-    padding: 8px;
+const schema = yup
+  .object({
+    title: yup
+      .string()
+      .required(requiredText)
+      .min(2, 'This field must have 2 characters minimum')
+      .max(30, 'This field must have 30 characters maximum'),
+    releaseDate: yup
+      .date()
+      .nullable()
+      .transform(transformField)
+      .max(new Date(), 'Release date must be before current date')
+      .required(requiredText),
+    country: yup.string().required(requiredText),
+    privacyCheckbox: yup.boolean().oneOf([true], requiredText),
+    city: yup.string().nullable().transform(transformField).required(requiredText),
+    poster: yup
+      .mixed()
+      .test('fileType', 'The file must be jpg, png, svg or gif formats', (value: FileList) => {
+        if (value[0]?.type) {
+          const acceptExts = ['image/png', 'image/jpeg', 'image/svg+xml', 'image/gif', 'image/jpg'];
+          return acceptExts.some((ext) => ext === value[0].type);
+        }
+        return true;
+      }),
+    budget: yup.number().nullable().transform(transformField).required(requiredText),
+    audience: yup.string().nullable().required(requiredText),
+  })
+  .required();
+
+const CustomForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+  max-width: 450px;
+  margin: 0 auto;
+`;
+
+const SubmitBtn = styled.input`
+  ${styledField};
+  padding: 16px;
+  border-radius: 24px;
+  cursor: pointer;
+  border: none;
+  background-color: #0a0a0a;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  transition: all 1s;
+  &:hover {
+    box-shadow: 5px 5px 25px 15px rgba(0, 0, 0, 0.2);
   }
 `;
 
-type FormProps = {
-  onSubmitForm: (card: DeliveryCard) => void;
-};
+export const Form = ({ context }: { context: AppContextData }) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<CreateMovieInputs>({
+    reValidateMode: 'onSubmit',
+    resolver: yupResolver(schema),
+  });
+  const [countryId, setCountryId] = useState<number | null>(null);
 
-export const Form = ({ onSubmitForm }: FormProps) => {
-  const [isDisabledSubmitBtn, setIsDisabledSubmitBtn] = useState(false);
-  const [formState, dispatchFormState] = useReducer(formReducer, FORM_INITIAL_STATE);
-
-  const showInputsErrorMessage = () => {
-    dispatchFormState({ type: 'VALIDATE_FULLNAME_INPUT' });
-    dispatchFormState({ type: 'VALIDATE_BIRTHDAY_INPUT' });
-    dispatchFormState({ type: 'VALIDATE_FILE_INPUT' });
-    dispatchFormState({ type: 'VALIDATE_ZIPCODE_INPUT' });
-    dispatchFormState({ type: 'VALIDATE_COUNTRY_SELECT' });
-    dispatchFormState({ type: 'VALIDATE_CITY_SELECT' });
-    dispatchFormState({ type: 'VALIDATE_CHECKBOX_PRIVACY' });
+  const handleFormSubmit = (data: CreateMovieInputs) => {
+    context.dispatchAppState({ type: 'ADD_FORM_CARD', payload: data });
+    reset();
   };
-
-  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    showInputsErrorMessage();
-    if (Object.values(formState).every((input) => input.isValid === true)) {
-      const card: DeliveryCard = {
-        fullName: formState.fullNameInput.value,
-        birthday: new Date(formState.birthdayInput.value),
-        srcImg: formState.fileInput.file
-          ? URL.createObjectURL(formState.fileInput.file)
-          : DefaultUserImgURL,
-        gender: formState.genderInput.value,
-        country: formState.selectCountry.value,
-        city: formState.selectCity.value,
-        zipCode: formState.zipCodeInput.value,
-      };
-      onSubmitForm(card);
-      dispatchFormState({ type: 'RESET_INPUTS' });
-    }
-    setIsDisabledSubmitBtn(true);
-  };
-
-  const updateFormState = (state: UpdateFormState) => {
-    switch (state.type) {
-      case 'SET_FILE_INPUT':
-        if (state.file) dispatchFormState({ type: state.type, file: state.file });
-        break;
-      case 'SET_CHECKBOX_PRIVACY':
-        if (state.isChecked !== undefined)
-          dispatchFormState({ type: state.type, isChecked: state.isChecked });
-        break;
-      case 'SET_CHECKBOX_PROMOTION':
-        if (state.isChecked !== undefined)
-          dispatchFormState({ type: state.type, isChecked: state.isChecked });
-        break;
-      default:
-        if (state.value !== undefined) dispatchFormState({ type: state.type, value: state.value });
-        break;
-    }
-  };
-
   return (
-    <FormWrapper onSubmit={handleSubmit} onChange={() => setIsDisabledSubmitBtn(false)}>
-      <PersonalInfoInputs
-        updateFormState={updateFormState}
-        fullNameInputState={formState.fullNameInput}
-        birthdayInputState={formState.birthdayInput}
-        fileInputState={formState.fileInput}
-        genderInputState={formState.genderInput}
+    <CustomForm onSubmit={handleSubmit(handleFormSubmit)}>
+      <Input
+        dataTestId="inputTitle"
+        inputName="title"
+        inputData={[{ labelValue: 'Movie title', placeholder: 'Spider Man' }]}
+        register={register}
+        errors={errors}
       />
-      <LocationInputs
-        updateFormState={updateFormState}
-        zipCodeInputState={formState.zipCodeInput}
-        countrySelectState={formState.selectCountry}
-        citySelectState={formState.selectCity}
+      <Input
+        dataTestId="inputPoster"
+        inputData={[{ labelValue: 'Movie poster' }]}
+        inputName="poster"
+        inputType="file"
+        register={register}
+        errors={errors}
       />
-      <PromotionCheckboxes
-        updateFormState={updateFormState}
-        checkboxPrivacyState={formState.checkboxPrivacy}
-        checkboxPromotionState={formState.checkboxPromotion}
+      <Input
+        dataTestId="inputDate"
+        inputName="releaseDate"
+        inputType="date"
+        inputData={[{ labelValue: 'Release date' }]}
+        register={register}
+        errors={errors}
       />
-      <SubmitBtn isDisabled={isDisabledSubmitBtn}>Submit</SubmitBtn>
-    </FormWrapper>
+      <Input
+        dataTestId="inputAmount"
+        inputName="budget"
+        inputType="number"
+        inputData={[{ labelValue: 'Budget ($)', placeholder: '1000000' }]}
+        register={register}
+        errors={errors}
+      />
+      <Input
+        dataTestId="inputRadio"
+        inputName="audience"
+        inputType="radio"
+        inputTitle="Movie audience"
+        inputData={[
+          { labelValue: 'Local', inputValue: 'local', inputId: 'local' },
+          {
+            labelValue: 'Local, partly global',
+            inputValue: 'global-partly',
+            inputId: 'global-partly',
+          },
+          { labelValue: 'Global', inputValue: 'global', inputId: 'global' },
+        ]}
+        register={register}
+        errors={errors}
+      />
+      <SelectCountry
+        onSelectCountryChange={setCountryId}
+        errors={errors}
+        register={register}
+        inputName="country"
+      />
+      <SelectCity countryId={countryId} errors={errors} register={register} inputName="city" />
+      <Input
+        dataTestId="checkboxPrivacy"
+        inputName="privacyCheckbox"
+        inputType="checkbox"
+        inputData={[{ labelValue: 'I Agree to Privacy Policy' }]}
+        register={register}
+        errors={errors}
+      />
+      <SubmitBtn data-testid="submit" type="submit" />
+    </CustomForm>
   );
 };

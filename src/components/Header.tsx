@@ -29,10 +29,10 @@ export const Header = () => {
           <CustomNavLink data-testid="home-link" to="/">
             Home
           </CustomNavLink>
-          <CustomNavLink data-testid="about-link" to="/about-us">
+          <CustomNavLink data-testid="about-link" to="/about">
             About
           </CustomNavLink>
-          <CustomNavLink to="/delivery-form">Delivery</CustomNavLink>
+          <CustomNavLink to="/create-movie">Create movie</CustomNavLink>
         </Nav>
       </Container>
     </HeaderWrapper>

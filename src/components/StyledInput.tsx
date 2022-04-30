@@ -30,7 +30,3 @@ export const SearchInput = styled.input`
 export const StyledInput = styled.input`
   ${inputStyles}
 `;
-
-export const StyledSelect = styled.select`
-  ${inputStyles}
-`;

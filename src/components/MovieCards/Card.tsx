@@ -1,28 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import { GenreData } from '../../types/types';
 import { CardTextSection } from './CardTextSection';
 import { PosterImage } from '../PosterImage';
-
-const CardWrapper = styled.li`
-  display: flex;
-  flex-direction: column;
-  max-width: 256px;
-  width: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-  -webkit-box-shadow: 5px 5px 10px 5px rgba(15, 60, 76, 0.15);
-  box-shadow: 5px 5px 10px 5px rgba(15, 60, 76, 0.15);
-  cursor: pointer;
-
-  @media screen and (max-width: 880px) {
-    max-width: 192px;
-  }
-
-  @media screen and (max-width: 488px) {
-    max-width: 100%;
-  }
-`;
+import { CardWrapper } from './CardWrapper';
 
 export type CardProps = {
   popularity: number;
@@ -41,7 +21,7 @@ export const Card = (props: CardProps) => {
 
   return (
     <CardWrapper className={className} data-cardid={cardId} data-testid="card-item">
-      <PosterImage poster_path={poster_path} title={title} vote_average={vote_average} />
+      <PosterImage posterPath={poster_path} title={title} voteAverage={vote_average} />
       <CardTextSection
         popularity={popularity}
         title={title}

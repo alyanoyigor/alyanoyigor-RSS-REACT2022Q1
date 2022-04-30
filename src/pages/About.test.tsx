@@ -7,7 +7,7 @@ import { About } from './About';
 
 describe('About', () => {
   it('about location path', () => {
-    renderWithRouter(<AppRouter />, '/about-us');
+    renderWithRouter(<AppRouter />, '/about');
     expect(screen.getByTestId('about-title')).toBeInTheDocument();
   });
   it('Render About page', () => {
