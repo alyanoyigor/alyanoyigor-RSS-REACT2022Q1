@@ -1,16 +1,13 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { DetailedMovieData } from '../types/types';
 import '@testing-library/jest-dom';
 import DefaultImg from '../assets/defaultPoster.jpg';
 import { MOVIE_POSTER_URL } from '../urls/urls';
 import { DetailedCard } from './DetailedCard';
+import { renderWithRouter } from '../test/helper/renderWithRouter';
 
 describe('Modal Overlay', () => {
   let testDetailedData: DetailedMovieData;
-  let onConfirm: jest.Mock<Record<string, unknown>>;
-  beforeAll(() => {
-    onConfirm = jest.fn();
-  });
   beforeEach(() => {
     testDetailedData = {
       adult: false,
@@ -60,40 +57,33 @@ describe('Modal Overlay', () => {
     };
   });
   it('date not found => span not render', () => {
-    const onConfirm = jest.fn();
     testDetailedData.release_date = null;
-    render(<DetailedCard movieData={testDetailedData} />);
+    renderWithRouter(<DetailedCard movieData={testDetailedData} />);
     expect(screen.queryByTestId('modal-card-date')).not.toBeInTheDocument();
   });
   it('date found => span render', () => {
-    render(<DetailedCard movieData={testDetailedData} />);
+    renderWithRouter(<DetailedCard movieData={testDetailedData} />);
     expect(screen.getByTestId('modal-card-date')).toBeInTheDocument();
   });
   it('genres found => span render', () => {
-    render(<DetailedCard movieData={testDetailedData} />);
+    renderWithRouter(<DetailedCard movieData={testDetailedData} />);
     expect(screen.getByTestId('modal-card-genres')).toBeInTheDocument();
   });
   it('genres not found => span not render', () => {
     testDetailedData.genres = [];
-    render(<DetailedCard movieData={testDetailedData} />);
+    renderWithRouter(<DetailedCard movieData={testDetailedData} />);
     expect(screen.queryByTestId('modal-card-genres')).not.toBeInTheDocument();
   });
   it('poster not found => set default path for image', () => {
     testDetailedData.poster_path = null;
-    render(<DetailedCard movieData={testDetailedData} />);
+    renderWithRouter(<DetailedCard movieData={testDetailedData} />);
     expect(screen.getByTestId('modal-card-poster')).toHaveAttribute('src', DefaultImg);
   });
   it('poster found => set path for image from request', () => {
-    render(<DetailedCard movieData={testDetailedData} />);
+    renderWithRouter(<DetailedCard movieData={testDetailedData} />);
     expect(screen.getByTestId('modal-card-poster')).toHaveAttribute(
       'src',
       MOVIE_POSTER_URL + testDetailedData.poster_path
     );
-  });
-  it('close modal card', async () => {
-    render(<DetailedCard movieData={testDetailedData} />);
-    const closeBtn = screen.getByTestId('modal-card-close-btn');
-    fireEvent.click(closeBtn);
-    expect(onConfirm).toHaveBeenCalledTimes(1);
   });
 });

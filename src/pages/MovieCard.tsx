@@ -49,7 +49,7 @@ export const MovieCard = () => {
   }
 
   return (
-    <div>
+    <div data-testid="card-page">
       <Button
         onClick={() => {
           navigate(-1);

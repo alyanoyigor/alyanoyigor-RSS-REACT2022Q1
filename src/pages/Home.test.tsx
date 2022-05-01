@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { AppRouter } from '../components/AppRouter';
 import { renderWithRouter } from '../test/helper/renderWithRouter';
 import '@testing-library/jest-dom';
@@ -103,12 +103,12 @@ describe('Home', () => {
   });
 
   it('Render Home page', () => {
-    render(<Home />);
+    renderWithRouter(<Home />);
     expect(screen.getByTestId('home-title')).toBeInTheDocument();
   });
 
   it('search movie', async () => {
-    render(<Home />);
+    renderWithRouter(<Home />);
     const cardItems = await screen.findAllByTestId('card-item');
     expect(cardItems.length).toBe(3);
 
