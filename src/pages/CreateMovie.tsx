@@ -11,7 +11,8 @@ const FormCardList = styled(ListWrapper)`
 `;
 
 const MakeMovieImg = styled.img`
-  max-width: 450px;
+  width: 35%;
+  height: 35%;
   transform: rotate(-15deg);
   z-index: -1;
 `;
@@ -19,6 +20,7 @@ const MakeMovieImg = styled.img`
 const FormWrapper = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 24px;
 `;
 

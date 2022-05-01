@@ -12,15 +12,23 @@ export type CardProps = {
   vote_average: number;
   genres: GenreData[];
   className: string;
-  cardId: number;
+  handleClick: () => void;
 };
 
 export const Card = (props: CardProps) => {
-  const { className, cardId, poster_path, vote_average, popularity, title, genres, release_date } =
-    props;
+  const {
+    className,
+    poster_path,
+    vote_average,
+    popularity,
+    title,
+    genres,
+    release_date,
+    handleClick,
+  } = props;
 
   return (
-    <CardWrapper className={className} data-cardid={cardId} data-testid="card-item">
+    <CardWrapper className={className} onClick={handleClick} data-testid="card-item">
       <PosterImage posterPath={poster_path} title={title} voteAverage={vote_average} />
       <CardTextSection
         popularity={popularity}

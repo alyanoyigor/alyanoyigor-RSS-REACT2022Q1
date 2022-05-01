@@ -141,9 +141,15 @@ export type BasicInputProps = {
   inputName: keyof InputsError;
 };
 
+type DisplayedCardData = {
+  id: number;
+  title: string;
+};
+
 export type State = {
   formCards: FormCardData[];
   searchValue: string;
+  displayedCard?: DisplayedCardData;
 };
 
 export type AppContextData = {
@@ -153,4 +159,11 @@ export type AppContextData = {
 
 export type Action =
   | { type: 'ADD_FORM_CARD'; payload: FormCardData }
-  | { type: 'ADD_SEARCH_VALUE'; payload: string };
+  | { type: 'ADD_SEARCH_VALUE'; payload: string }
+  | { type: 'ADD_DISPLAYED_CARD'; payload?: DisplayedCardData };
+
+export type SortBtnData = {
+  name: string;
+  isDesc: boolean;
+  parameter: string;
+};

@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { DetailedMovieData } from '../../types/types';
+import { DetailedMovieData } from '../types/types';
 import '@testing-library/jest-dom';
-import { ModalOverlay } from './ModalOverlay';
-import DefaultImg from '../../assets/defaultPoster.jpg';
-import { MOVIE_POSTER_URL } from '../../urls/urls';
+import DefaultImg from '../assets/defaultPoster.jpg';
+import { MOVIE_POSTER_URL } from '../urls/urls';
+import { DetailedCard } from './DetailedCard';
 
 describe('Modal Overlay', () => {
   let testDetailedData: DetailedMovieData;
@@ -62,36 +62,36 @@ describe('Modal Overlay', () => {
   it('date not found => span not render', () => {
     const onConfirm = jest.fn();
     testDetailedData.release_date = null;
-    render(<ModalOverlay movieData={testDetailedData} onConfirm={onConfirm} />);
+    render(<DetailedCard movieData={testDetailedData} />);
     expect(screen.queryByTestId('modal-card-date')).not.toBeInTheDocument();
   });
   it('date found => span render', () => {
-    render(<ModalOverlay movieData={testDetailedData} onConfirm={onConfirm} />);
+    render(<DetailedCard movieData={testDetailedData} />);
     expect(screen.getByTestId('modal-card-date')).toBeInTheDocument();
   });
   it('genres found => span render', () => {
-    render(<ModalOverlay movieData={testDetailedData} onConfirm={onConfirm} />);
+    render(<DetailedCard movieData={testDetailedData} />);
     expect(screen.getByTestId('modal-card-genres')).toBeInTheDocument();
   });
   it('genres not found => span not render', () => {
     testDetailedData.genres = [];
-    render(<ModalOverlay movieData={testDetailedData} onConfirm={onConfirm} />);
+    render(<DetailedCard movieData={testDetailedData} />);
     expect(screen.queryByTestId('modal-card-genres')).not.toBeInTheDocument();
   });
   it('poster not found => set default path for image', () => {
     testDetailedData.poster_path = null;
-    render(<ModalOverlay movieData={testDetailedData} onConfirm={onConfirm} />);
+    render(<DetailedCard movieData={testDetailedData} />);
     expect(screen.getByTestId('modal-card-poster')).toHaveAttribute('src', DefaultImg);
   });
   it('poster found => set path for image from request', () => {
-    render(<ModalOverlay movieData={testDetailedData} onConfirm={onConfirm} />);
+    render(<DetailedCard movieData={testDetailedData} />);
     expect(screen.getByTestId('modal-card-poster')).toHaveAttribute(
       'src',
       MOVIE_POSTER_URL + testDetailedData.poster_path
     );
   });
   it('close modal card', async () => {
-    render(<ModalOverlay movieData={testDetailedData} onConfirm={onConfirm} />);
+    render(<DetailedCard movieData={testDetailedData} />);
     const closeBtn = screen.getByTestId('modal-card-close-btn');
     fireEvent.click(closeBtn);
     expect(onConfirm).toHaveBeenCalledTimes(1);

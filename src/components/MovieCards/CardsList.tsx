@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card } from './Card';
 import { GenreData, MovieData } from '../../types/types';
 import { Preloader } from '../Preloader';
-import { ModalCard } from './ModalCard';
 import { ListWrapper } from './ListWrapper';
+import { useNavigate } from 'react-router-dom';
 
 type CardsListProps = {
   moviesData: MovieData[];
@@ -12,19 +12,7 @@ type CardsListProps = {
 };
 
 export const CardsList = ({ moviesData, genresData, isFetching }: CardsListProps) => {
-  const [isOpenCardModal, setIsOpenCardModal] = useState(false);
-  const [cardId, setCardId] = useState('');
-
-  const handleOpenModalCard = (e: React.MouseEvent<HTMLUListElement>) => {
-    if (e.target instanceof HTMLElement) {
-      const movieCard: HTMLElement | null = e.target.closest('.movie-card');
-      if (movieCard && movieCard.dataset.cardid) {
-        setIsOpenCardModal(true);
-        setCardId(movieCard.dataset.cardid);
-      }
-    }
-  };
-
+  const navigate = useNavigate();
   const filterGenresFromMovie = (movieGenreIds: number[]) => {
     return genresData.filter((genre) => movieGenreIds.find((id) => id === genre.id));
   };
@@ -34,15 +22,14 @@ export const CardsList = ({ moviesData, genresData, isFetching }: CardsListProps
   }
   return (
     <>
-      {isOpenCardModal && <ModalCard cardId={cardId} onConfirm={() => setIsOpenCardModal(false)} />}
-      <ListWrapper data-testid="card-list" onClick={handleOpenModalCard}>
+      <ListWrapper data-testid="card-list">
         {!moviesData.length ? (
           <h2>Nothing was found</h2>
         ) : (
           moviesData.map((movie: MovieData) => (
             <Card
               className="movie-card"
-              cardId={movie.id}
+              handleClick={() => navigate(`/movie/${movie.id}`)}
               key={movie.id}
               genres={filterGenresFromMovie(movie.genre_ids)}
               {...movie}

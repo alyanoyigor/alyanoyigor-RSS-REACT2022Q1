@@ -1,10 +1,9 @@
 import React from 'react';
-import { MOVIE_COMPANIES_URL, MOVIE_POSTER_BG_URL, MOVIE_POSTER_URL } from '../../urls/urls';
-import { convertDate, convertTime } from '../../utils/utils';
-import DefaultImg from '../../assets/defaultPoster.jpg';
+import { MOVIE_COMPANIES_URL, MOVIE_POSTER_BG_URL, MOVIE_POSTER_URL } from '../urls/urls';
+import { convertDate, convertTime } from '../utils/utils';
+import DefaultImg from '../assets/defaultPoster.jpg';
 import styled from 'styled-components';
-import { CloseBtn } from '../CloseBtn';
-import { DetailedMovieData } from '../../types/types';
+import { DetailedMovieData } from '../types/types';
 
 const ImageWrapper = styled.div`
   max-width: 350px;
@@ -19,24 +18,20 @@ const ImageWrapper = styled.div`
   @media (max-width: 768px) {
     min-width: 0px;
     width: 100%;
-    height: 150px;
+    height: 200px;
     & img {
       height: 100%;
+      object-position: top;
       object-fit: cover;
     }
   }
 `;
 
 const Modal = styled.div`
-  position: fixed;
   display: flex;
   gap: 48px;
   color: #fff;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  max-width: 1170px;
-  width: 80%;
+  width: 100%;
   z-index: 100;
   background-size: cover;
   padding: 32px 16px 16px 16px;
@@ -49,15 +44,9 @@ const Modal = styled.div`
   border-radius: 16px;
 
   @media (max-width: 768px) {
-    height: 80%;
     gap: 16px;
     align-content: flex-start;
     flex-wrap: wrap;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    right: 0;
-    bottom: 0;
   }
 `;
 
@@ -121,12 +110,7 @@ const OverviewBlock = styled.div`
   }
 `;
 
-type ModalOverlayProps = {
-  movieData: DetailedMovieData;
-  onConfirm: () => void;
-};
-
-export const ModalOverlay = ({ movieData, onConfirm }: ModalOverlayProps) => {
+export const DetailedCard = ({ movieData }: { movieData: DetailedMovieData }) => {
   const convertedDate = movieData.release_date
     ? convertDate(movieData.release_date, { month: '2-digit' })
     : null;
@@ -143,7 +127,6 @@ export const ModalOverlay = ({ movieData, onConfirm }: ModalOverlayProps) => {
   ) : null;
   return (
     <Modal data-testid="modal-card" bg={movieData.backdrop_path}>
-      <CloseBtn data-testid="modal-card-close-btn" onClick={onConfirm} />
       <ImageWrapper>
         <img data-testid="modal-card-poster" src={posterPath} alt={movieData.title} />
       </ImageWrapper>

@@ -6,6 +6,8 @@ const appReducer = (state: State, action: Action) => {
       return { ...state, searchValue: action.payload };
     case 'ADD_FORM_CARD':
       return { ...state, formCards: [action.payload, ...state.formCards] };
+    case 'ADD_DISPLAYED_CARD':
+      return { ...state, displayedCard: action.payload };
     default:
       return state;
   }

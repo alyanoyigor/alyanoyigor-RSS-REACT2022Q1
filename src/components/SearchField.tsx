@@ -35,6 +35,7 @@ export const SearchField = ({ onSubmitMovie }: SearchFieldProps) => {
     window.addEventListener('load', () => {
       const savedSearchValue = localStorage.getItem('searchValue');
       if (savedSearchValue) {
+        setSearchValue(savedSearchValue);
         updateSearchValue(savedSearchValue);
       }
     });

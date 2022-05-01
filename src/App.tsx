@@ -6,7 +6,10 @@ import AppContext from './store/context';
 import appReducer from './store/reducer';
 
 const App = () => {
-  const [appState, dispatchAppState] = useReducer(appReducer, { formCards: [], searchValue: '' });
+  const [appState, dispatchAppState] = useReducer(appReducer, {
+    formCards: [],
+    searchValue: '',
+  });
   return (
     <AppContext.Provider value={{ appState, dispatchAppState }}>
       <Header />
