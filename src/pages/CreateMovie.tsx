@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Form } from '../components/FormComponents/Form';
 import { FormCard } from '../components/FormComponents/FormCard';
 import { ListWrapper } from '../components/MovieCards/ListWrapper';
-import AppContext from '../store/context';
 import MakeMoviePoster from '../assets/makeMoviePoster.jpg';
+import { useSelector } from 'react-redux';
+import { State } from '../types/types';
 
 const FormCardList = styled(ListWrapper)`
   margin-top: 32px;
@@ -25,15 +26,15 @@ const FormWrapper = styled.div`
 `;
 
 export const CreateMovie = () => {
-  const ctx = useContext(AppContext);
+  const formCards = useSelector((state: { appState: State }) => state.appState.formCards);
   return (
     <div>
       <FormWrapper>
         <MakeMovieImg src={MakeMoviePoster} alt="Make movie poster" />
-        <Form context={ctx} />
+        <Form />
       </FormWrapper>
       <FormCardList>
-        {ctx.appState.formCards.map((card) => (
+        {formCards.map((card) => (
           <FormCard key={Math.random()} {...card} />
         ))}
       </FormCardList>

@@ -1,5 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import AppContext from '../store/context';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addSearchValueAction } from '../store/appSlice';
+import { State } from '../types/types';
 import { SearchInput } from './StyledInput';
 
 type SearchFieldProps = {
@@ -7,15 +9,17 @@ type SearchFieldProps = {
 };
 
 export const SearchField = ({ onSubmitMovie }: SearchFieldProps) => {
-  const ctx = useContext(AppContext);
+  const searchValueFromState = useSelector(
+    (state: { appState: State }) => state.appState.searchValue
+  );
+  const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState('');
 
   const saveValueToLocalStorage = (value: string) => {
     localStorage.setItem('searchValue', value);
   };
 
-  const updateSearchValue = (value: string) =>
-    ctx.dispatchAppState({ type: 'ADD_SEARCH_VALUE', payload: value });
+  const updateSearchValue = (value: string) => dispatch(addSearchValueAction(value));
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
@@ -32,25 +36,21 @@ export const SearchField = ({ onSubmitMovie }: SearchFieldProps) => {
   };
 
   useEffect(() => {
-    window.addEventListener('load', () => {
-      const savedSearchValue = localStorage.getItem('searchValue');
-      if (savedSearchValue) {
-        setSearchValue(savedSearchValue);
-        updateSearchValue(savedSearchValue);
-      }
-    });
+    const savedSearchValue = localStorage.getItem('searchValue');
+    if (savedSearchValue) {
+      setSearchValue(savedSearchValue);
+      updateSearchValue(savedSearchValue);
+    }
   }, []);
 
   useEffect(() => {
-    window.addEventListener('beforeunload', () =>
-      saveValueToLocalStorage(ctx.appState.searchValue)
-    );
+    window.addEventListener('beforeunload', () => saveValueToLocalStorage(searchValueFromState));
     return () => {
       window.removeEventListener('beforeunload', () =>
-        saveValueToLocalStorage(ctx.appState.searchValue)
+        saveValueToLocalStorage(searchValueFromState)
       );
     };
-  }, [ctx.appState.searchValue]);
+  }, [searchValueFromState]);
 
   return (
     <SearchInput

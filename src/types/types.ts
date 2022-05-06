@@ -141,7 +141,7 @@ export type BasicInputProps = {
   inputName: keyof InputsError;
 };
 
-type DisplayedCardData = {
+export type DisplayedCardData = {
   id: number;
   title: string;
 };

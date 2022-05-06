@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Container } from './Container';
-import AppContext from '../store/context';
+import { State } from '../types/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDisplayedCardAction } from '../store/appSlice';
 
 const CustomNavLink = styled(NavLink)`
   cursor: pointer;
@@ -24,10 +26,11 @@ const Nav = styled.nav`
 `;
 
 export const Header = () => {
-  const ctx = useContext(AppContext);
-  const displayedCard = ctx.appState.displayedCard;
+  const displayedCard = useSelector((state: { appState: State }) => state.appState.displayedCard);
+  const dispatch = useDispatch();
+
   const handleLinkClick = () => {
-    if (displayedCard) ctx.dispatchAppState({ type: 'ADD_DISPLAYED_CARD' });
+    if (displayedCard) dispatch(setDisplayedCardAction());
   };
   return (
     <HeaderWrapper data-testid="header">

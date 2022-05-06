@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AppContextData, CreateMovieInputs } from '../../types/types';
+import { CreateMovieInputs } from '../../types/types';
+import { addFormCardAction } from '../../store/appSlice';
 import { Input } from './Input';
 import { SelectCountry } from './SelectCountry';
 import { SelectCity } from './SelectCity';
 import { styledField } from './styledField';
 import { formSchema } from '../../validation/validation';
+import { useDispatch } from 'react-redux';
 
 const CustomForm = styled.form`
   display: flex;
@@ -34,7 +36,7 @@ const SubmitBtn = styled.input`
   }
 `;
 
-export const Form = ({ context }: { context: AppContextData }) => {
+export const Form = () => {
   const {
     register,
     handleSubmit,
@@ -45,9 +47,10 @@ export const Form = ({ context }: { context: AppContextData }) => {
     resolver: yupResolver(formSchema),
   });
   const [countryId, setCountryId] = useState<number | null>(null);
+  const dispatch = useDispatch();
 
   const handleFormSubmit = (data: CreateMovieInputs) => {
-    context.dispatchAppState({ type: 'ADD_FORM_CARD', payload: data });
+    dispatch(addFormCardAction(data));
     reset();
   };
   return (

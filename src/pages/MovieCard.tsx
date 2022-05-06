@@ -4,8 +4,9 @@ import { DetailedCard } from '../components/DetailedCard';
 import styled from 'styled-components';
 import { DetailedMovieData } from '../types/types';
 import { Preloader } from '../components/Preloader';
-import AppContext from '../store/context';
 import { getDetailMovieData } from '../requests/requests';
+import { useDispatch } from 'react-redux';
+import { setDisplayedCardAction } from '../store/appSlice';
 
 const Button = styled.button`
   padding: 0 16px;
@@ -18,7 +19,7 @@ const Button = styled.button`
 
 export const MovieCard = () => {
   const { id } = useParams();
-  const ctx = useContext(AppContext);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [movie, setMovie] = useState<DetailedMovieData | null>(null);
@@ -31,10 +32,7 @@ export const MovieCard = () => {
         if (!id) throw new Error("Can't read id in useParams");
         const movieData = await getDetailMovieData(id);
         setMovie(movieData);
-        ctx.dispatchAppState({
-          type: 'ADD_DISPLAYED_CARD',
-          payload: { id: movieData.id, title: movieData.title },
-        });
+        dispatch(setDisplayedCardAction({ id: movieData.id, title: movieData.title }));
       } catch (e) {
         console.log(e);
         return navigate('/');
@@ -53,7 +51,7 @@ export const MovieCard = () => {
       <Button
         onClick={() => {
           navigate(-1);
-          ctx.dispatchAppState({ type: 'ADD_DISPLAYED_CARD' });
+          dispatch(setDisplayedCardAction());
         }}
       >
         ← Back
