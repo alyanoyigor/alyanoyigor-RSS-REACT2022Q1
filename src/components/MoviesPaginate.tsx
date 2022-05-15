@@ -1,21 +1,24 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
+import { useSelector } from 'react-redux';
+import { State } from '../types/types';
 
 type MoviesPaginateProps = {
-  totalCount: number;
   pageNum: number;
   handlePaginate: (data: { selected: number }) => void;
 };
 
-export const MoviesPaginate = ({ totalCount, pageNum, handlePaginate }: MoviesPaginateProps) => {
-  return totalCount ? (
+export const MoviesPaginate = ({ pageNum, handlePaginate }: MoviesPaginateProps) => {
+  const { totalPages } = useSelector((state: { appState: State }) => state.appState);
+
+  return totalPages ? (
     <ReactPaginate
       nextLabel=">>"
       previousLabel="<<"
       breakLabel="..."
       marginPagesDisplayed={1}
       pageRangeDisplayed={4}
-      pageCount={totalCount > 500 ? 500 : totalCount}
+      pageCount={totalPages > 500 ? 500 : totalPages}
       forcePage={pageNum}
       onPageChange={handlePaginate}
       containerClassName="pagination justify-content-center"

@@ -1,12 +1,12 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DetailedCard } from '../components/DetailedCard';
 import styled from 'styled-components';
-import { DetailedMovieData } from '../types/types';
+import { State } from '../types/types';
 import { Preloader } from '../components/Preloader';
 import { getDetailMovieData } from '../requests/requests';
-import { useDispatch } from 'react-redux';
-import { setDisplayedCardAction } from '../store/appSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../store/store';
 
 const Button = styled.button`
   padding: 0 16px;
@@ -19,44 +19,28 @@ const Button = styled.button`
 
 export const MovieCard = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-
-  const [movie, setMovie] = useState<DetailedMovieData | null>(null);
-  const [isFetching, setIsFetching] = useState(false);
+  const { detailedCard, isLoading } = useSelector((state: { appState: State }) => state.appState);
 
   useEffect(() => {
-    (async () => {
-      try {
-        setIsFetching(true);
-        if (!id) throw new Error("Can't read id in useParams");
-        const movieData = await getDetailMovieData(id);
-        setMovie(movieData);
-        dispatch(setDisplayedCardAction({ id: movieData.id, title: movieData.title }));
-      } catch (e) {
-        console.log(e);
-        return navigate('/');
-      } finally {
-        setIsFetching(false);
-      }
-    })();
+    try {
+      if (!id) throw new Error("Can't read id in useParams");
+      dispatch(getDetailMovieData(id));
+    } catch (e) {
+      console.log(e);
+      return navigate('/');
+    }
   }, []);
 
-  if (isFetching || !movie) {
+  if (isLoading || !detailedCard) {
     return <Preloader />;
   }
 
   return (
     <div data-testid="card-page">
-      <Button
-        onClick={() => {
-          navigate(-1);
-          dispatch(setDisplayedCardAction());
-        }}
-      >
-        ← Back
-      </Button>
-      {movie && <DetailedCard movieData={movie} />}
+      <Button onClick={() => navigate(-1)}>← Back</Button>
+      {detailedCard && <DetailedCard movieData={detailedCard} />}
     </div>
   );
 };

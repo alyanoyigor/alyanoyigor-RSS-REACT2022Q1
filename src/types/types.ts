@@ -149,18 +149,13 @@ export type DisplayedCardData = {
 export type State = {
   formCards: FormCardData[];
   searchValue: string;
-  displayedCard?: DisplayedCardData;
+  movieCards: MovieData[];
+  isLoading: boolean;
+  genres: GenreData[];
+  error: string | null;
+  totalPages: number;
+  detailedCard?: DetailedMovieData;
 };
-
-export type AppContextData = {
-  appState: State;
-  dispatchAppState: (value: Action) => void;
-};
-
-export type Action =
-  | { type: 'ADD_FORM_CARD'; payload: FormCardData }
-  | { type: 'ADD_SEARCH_VALUE'; payload: string }
-  | { type: 'ADD_DISPLAYED_CARD'; payload?: DisplayedCardData };
 
 export type SortBtnData = {
   name: string;

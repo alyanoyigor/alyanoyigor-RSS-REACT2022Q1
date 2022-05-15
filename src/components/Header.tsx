@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import { Container } from './Container';
 import { State } from '../types/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDisplayedCardAction } from '../store/appSlice';
 
 const CustomNavLink = styled(NavLink)`
   cursor: pointer;
@@ -26,27 +25,22 @@ const Nav = styled.nav`
 `;
 
 export const Header = () => {
-  const displayedCard = useSelector((state: { appState: State }) => state.appState.displayedCard);
+  const detailedCard = useSelector((state: { appState: State }) => state.appState.detailedCard);
   const dispatch = useDispatch();
 
-  const handleLinkClick = () => {
-    if (displayedCard) dispatch(setDisplayedCardAction());
-  };
   return (
     <HeaderWrapper data-testid="header">
       <Container>
         <Nav>
-          <CustomNavLink data-testid="home-link" to="/" onClick={handleLinkClick}>
+          <CustomNavLink data-testid="home-link" to="/">
             Home
           </CustomNavLink>
-          <CustomNavLink data-testid="about-link" to="/about" onClick={handleLinkClick}>
+          <CustomNavLink data-testid="about-link" to="/about">
             About
           </CustomNavLink>
-          <CustomNavLink to="/create-movie" onClick={handleLinkClick}>
-            Create movie
-          </CustomNavLink>
-          {displayedCard && (
-            <CustomNavLink to={'/movie/' + displayedCard.id}>{displayedCard.title}</CustomNavLink>
+          <CustomNavLink to="/create-movie">Create movie</CustomNavLink>
+          {detailedCard && (
+            <CustomNavLink to={'/movie/' + detailedCard.id}>{detailedCard.title}</CustomNavLink>
           )}
         </Nav>
       </Container>

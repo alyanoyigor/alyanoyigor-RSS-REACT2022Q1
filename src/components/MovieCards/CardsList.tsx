@@ -1,18 +1,18 @@
 import React from 'react';
 import { Card } from './Card';
-import { GenreData, MovieData } from '../../types/types';
+import { MovieData, State } from '../../types/types';
 import { Preloader } from '../Preloader';
 import { ListWrapper } from './ListWrapper';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-type CardsListProps = {
-  moviesData: MovieData[];
-  genresData: GenreData[];
-  isFetching: boolean;
-};
-
-export const CardsList = ({ moviesData, genresData, isFetching }: CardsListProps) => {
+export const CardsList = () => {
   const navigate = useNavigate();
+  const {
+    movieCards: moviesData,
+    genres: genresData,
+    isLoading: isFetching,
+  } = useSelector((state: { appState: State }) => state.appState);
   const filterGenresFromMovie = (movieGenreIds: number[]) => {
     return genresData.filter((genre) => movieGenreIds.find((id) => id === genre.id));
   };

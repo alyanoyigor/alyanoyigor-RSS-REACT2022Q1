@@ -82,17 +82,13 @@ describe('Cards List', () => {
   });
 
   it('Render cards', async () => {
-    renderWithRouter(
-      <CardsList genresData={testGenresData} isFetching={false} moviesData={testMovieData} />
-    );
+    renderWithRouter(<CardsList />);
     const cards = screen.getAllByTestId('card-item');
     expect(cards.length).toBe(3);
   });
 
   it('Cards have titles', async () => {
-    renderWithRouter(
-      <CardsList genresData={testGenresData} isFetching={false} moviesData={testMovieData} />
-    );
+    renderWithRouter(<CardsList />);
     expect(screen.getByText(/Turning Red/i)).toBeInTheDocument();
     expect(screen.getByText(/Spider-Man/i)).toBeInTheDocument();
     expect(screen.getByText(/The Adam/i)).toBeInTheDocument();
@@ -119,9 +115,7 @@ describe('Cards List', () => {
       },
     ];
 
-    renderWithRouter(
-      <CardsList genresData={testGenresData} isFetching={false} moviesData={testMovieData} />
-    );
+    renderWithRouter(<CardsList />);
     expect(screen.getByText(/Animation/i)).toBeInTheDocument();
     expect(screen.getByText(/Comedy/i)).toBeInTheDocument();
     expect(screen.queryByText(/Action/i)).not.toBeInTheDocument();

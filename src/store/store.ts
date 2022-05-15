@@ -6,3 +6,5 @@ export const store = configureStore({
     appState: appReducer,
   },
 });
+
+export type AppDispatch = typeof store.dispatch;
